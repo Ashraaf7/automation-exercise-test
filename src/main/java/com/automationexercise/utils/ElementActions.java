@@ -69,6 +69,7 @@ public class ElementActions {
         scrollToElementAtTop(locator);
         waits.waitForElementClickable(locator);
         findElement(locator).click();
+        LogUtils.info("Click on element " + locator);
     }
 
     /**
@@ -87,13 +88,16 @@ public class ElementActions {
         scrollToElementAtTop(locator);
         waits.waitForElementVisible(locator);
         findElement(locator).sendKeys(data);
+        LogUtils.info("Type " + data + " in element " + locator);
     }
 
     //TODO: get text from element after checking visibility
     public String getText(By locator) {
         scrollToElementAtTop(locator);
         waits.waitForElementVisible(locator);
-        return findElement(locator).getText();
+        String text = findElement(locator).getText();
+        LogUtils.info("Get text from element " + locator + ": " + text);
+        return text;
     }
 
     //Convert Locator to Web Element

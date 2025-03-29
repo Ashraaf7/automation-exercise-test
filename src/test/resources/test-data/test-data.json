@@ -1,10 +1,22 @@
 {
-  "loginCred":{
-    "username": "sysadmin",
-    "password": "wzG3Dt@yR"
-  },
-  "vpnCred": {
-    "username": "asayad",
-    "password": "RSDmom@2030"
+  "registeration": {
+    "name": "testname_",
+    "email": "testemail_",
+    "titleMale": "Mr",
+    "titleFemale": "Mrs",
+    "password": "testpassword12345@",
+    "day": "1",
+    "month": "January",
+    "year": "2000",
+    "firstName": "testfirstname_",
+    "lastName": "testlastname_",
+    "companyName": "testcompany",
+    "address1": "testaddress1",
+    "address2": "testaddress2",
+    "country": "India",
+    "state": "teststate",
+    "city": "testcity",
+    "zipCode": "12345",
+    "mobileNumber": "1234567890"
   }
 }

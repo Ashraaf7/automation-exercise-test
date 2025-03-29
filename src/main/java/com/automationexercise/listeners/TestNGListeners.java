@@ -28,7 +28,6 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
             FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
         }
         FilesUtils.cleanDirectory(screenshots);
-        FilesUtils.cleanDirectory(allure_results);
         FilesUtils.cleanDirectory(reports);
         FilesUtils.cleanDirectory(logs);
         FilesUtils.cleanDirectory(recordings);
@@ -51,7 +50,7 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         if (method.isTestMethod()) {
-            ScreenRecorderUtils.startRecording();
+            //ScreenRecorderUtils.startRecording();
             LogUtils.info("Test Case " + testResult.getName() + " started");
         }
     }
@@ -60,7 +59,7 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult result) {
         if (method.isTestMethod()) {
-            ScreenRecorderUtils.stopRecording(result.getName());
+            //ScreenRecorderUtils.stopRecording(result.getName());
             SoftAssertionUtils.softAssertAll(result);
             // For Test Methods: Log and Take Screenshot
             switch (result.getStatus()) {

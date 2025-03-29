@@ -48,7 +48,7 @@ public class AllureUtils {
         try {
             String allureZipPath = getAllureZipPath();
             ALLURE_BINARY_PATH = ALLURE_EXTRACTION_LOCATION + "allure-" + ALLURE_VERSION + File.separator + "bin" + File.separator + "allure";
-            if (new File((ALLURE_EXTRACTION_LOCATION + "allure-" + ALLURE_VERSION)).list() != null) {
+            if (new File((ALLURE_EXTRACTION_LOCATION + "allure-" + ALLURE_VERSION)).exists()) {
                 LogUtils.info("Allure binaries already exist.");
                 return;
             } else {
