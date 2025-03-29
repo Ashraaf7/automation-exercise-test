@@ -85,6 +85,8 @@
   ```bash
   mvn -Dtest=TestClassName test 
   ```
+   
+```bash
 ## 📄 Project Structure
 automation-exercise-test/  
 ├── .github
@@ -155,6 +157,7 @@ automation-exercise-test/
         └── suites
             ├── .gitkeep
             └── RegressionSuite.xml
+```
 
 
 ## Contributing
