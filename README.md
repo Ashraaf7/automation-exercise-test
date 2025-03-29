@@ -7,7 +7,7 @@
 ## Repository Information
 
 - **Owner:** [Ashraaf7](https://github.com/Ashraaf7)
-- **Repository URL:** [ASHRAFINIUM](https://github.com/Ashraaf7/ASHRAFINIUM)
+- **Repository URL:** [automation-exercise-test](https://github.com/Ashraaf7/automation-exercise-test.git)
 - **Primary Language:** Java
 
 ## 🚀 Features  
