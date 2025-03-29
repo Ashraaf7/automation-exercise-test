@@ -1,0 +1,106 @@
+name: E2E Regression Testing
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron: '00 4 * * *'
+  workflow_dispatch:
+    
+
+env:
+  TESTING_SCOPE: "%regex[.*Test.*],com.tests.**.**,com.tests.**"
+
+jobs:
+
+  E2E_Chrome_Linux_Test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.6
+
+
+      - name: Run Tests
+        continue-on-error: true
+        run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -Dtest="${TESTING_SCOPE}" clean test
+
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Chrome_Linux_Allure
+          path: "test-outputs/reports/*.html"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.8
+      - name: Publish Test Results
+        continue-on-error: true
+        uses: EnricoMi/publish-unit-test-result-action/linux@v2
+        if: always()
+        with:
+          check_name: "Tests Results Chrome_Linux"
+          files: |
+            test-outputs/target/surefire-reports/TEST-*.xml
+
+  E2E_Edge_Windows_Test:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.6
+
+
+      - name: Run Tests
+        continue-on-error: true
+        run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -Dtest="${TESTING_SCOPE}" clean test
+
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Edge_Windows_Allure
+          path: "test-outputs/reports/*.html"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.8
+      - name: Publish Test Results
+        continue-on-error: true
+        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        if: always()
+        with:
+          check_name: "Tests Results Edge_Windows"
+          files: |
+            test-outputs/target/surefire-report/TEST-*.xml
