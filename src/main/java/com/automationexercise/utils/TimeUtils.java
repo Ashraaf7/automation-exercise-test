@@ -9,11 +9,11 @@ public class TimeUtils {
     }
 
     public static String getTimestamp() {
-        return new SimpleDateFormat("yyyy-MM-dd_hh-mm-ssa").format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss").format(new Date());
     }
 
     public static String getSimpleTimestamp() {
-        return new SimpleDateFormat("hh-mm-ssa").format(new Date());
+        return new SimpleDateFormat("hh-mm-ss").format(new Date());
     }
 
 
