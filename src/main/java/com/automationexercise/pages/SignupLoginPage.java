@@ -16,6 +16,7 @@ public class SignupLoginPage extends NavigationBarPage {
     private final By newUserSignup = By.cssSelector(".signup-form > h2");
     private final By loginToAccountLabel = By.cssSelector(".login-form > h2");
     private final By loginErrorMsg = By.cssSelector("[action=\"/login\"] > p");
+    private final By registerErrorMsg = By.cssSelector("[action=\"/Register\"] > p");
 
     public SignupLoginPage(GUIDriver driver) {
         super(driver);
@@ -42,9 +43,9 @@ public class SignupLoginPage extends NavigationBarPage {
     }
 
     @Step("Click signup button")
-    public RegisterPage clickSignupButton() {
+    public SignupPage clickSignupButton() {
         driver.element().click(signupButton);
-        return new RegisterPage(driver);
+        return new SignupPage(driver);
     }
 
     //Login methods
@@ -63,7 +64,7 @@ public class SignupLoginPage extends NavigationBarPage {
     @Step("Click login button")
     public SignupLoginPage clickLoginButton() {
         driver.element().click(loginButton);
-        return new SignupLoginPage(driver);
+        return this;
     }
 
     //validation methods
@@ -82,6 +83,12 @@ public class SignupLoginPage extends NavigationBarPage {
     @Step("verify that Login Error message is visible")
     public SignupLoginPage verifyInvalidLoginMessage() {
         driver.validate().validateElementVisible(loginErrorMsg);
+        return this;
+    }
+
+    @Step("verify that Register Error message is visible")
+    public SignupLoginPage verifyInvalidRegisterMessage() {
+        driver.validate().validateElementVisible(registerErrorMsg);
         return this;
     }
 }

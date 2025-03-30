@@ -34,7 +34,7 @@ public class TC1_RegisterUser extends BaseTest {
     }
 
     @Test
-    public void RegisterUser() {
+    public void registerUser() {
         new SignupLoginPage(driver)
                 .clickSignupLoginButton()
                 .verifyNewUserSignupVisible()
