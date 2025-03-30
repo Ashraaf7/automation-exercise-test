@@ -5,6 +5,7 @@
             <class name="com.automationexercise.tests.TC1_RegisterUser"/>
             <class name="com.automationexercise.tests.TC2_ValidLogin"/>
             <class name="com.automationexercise.tests.TC3_InvalidLogin"/>
+            <class name="com.automationexercise.tests.TC4_Logout"/>
         </classes>
     </test>
 </suite>
