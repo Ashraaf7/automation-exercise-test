@@ -16,7 +16,7 @@ public class SignupLoginPage extends NavigationBarPage {
     private final By newUserSignup = By.cssSelector(".signup-form > h2");
     private final By loginToAccountLabel = By.cssSelector(".login-form > h2");
     private final By loginErrorMsg = By.cssSelector("[action=\"/login\"] > p");
-    private final By registerErrorMsg = By.cssSelector("[action=\"/Register\"] > p");
+    private final By registerErrorMsg = By.cssSelector("[action=\"/signup\"] > p");
 
     public SignupLoginPage(GUIDriver driver) {
         super(driver);
