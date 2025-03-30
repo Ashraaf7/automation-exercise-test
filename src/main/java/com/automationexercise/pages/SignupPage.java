@@ -5,7 +5,7 @@ import com.automationexercise.utils.LogUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-public class RegisterPage extends NavigationBarPage {
+public class SignupPage extends NavigationBarPage {
     private final By enterAccountInformation = By.cssSelector(".login-form > h2");
     private final By titleMale = By.id("id_gender1");
     private final By titleFemale = By.id("id_gender2");
@@ -29,26 +29,26 @@ public class RegisterPage extends NavigationBarPage {
     private final By accountCreated = By.cssSelector("[data-qa=\"account-created\"]");
     private final By continueButton = By.cssSelector("[data-qa=\"continue-button\"]");
 
-    public RegisterPage(GUIDriver driver) {
+    public SignupPage(GUIDriver driver) {
         super(driver);
     }
 
     @Step("Fill Registration Form")
-    public RegisterPage fillRegisterationForm(String title,
-                                              String passwordText,
-                                              String dayText,
-                                              String monthText,
-                                              String yearText,
-                                              String firstNameText,
-                                              String lastNameText,
-                                              String companyText,
-                                              String address1Text,
-                                              String address2Text,
-                                              String countryText,
-                                              String stateText,
-                                              String cityText,
-                                              String zipcodeText,
-                                              String mobileNumberText) {
+    public SignupPage fillRegisterationForm(String title,
+                                            String passwordText,
+                                            String dayText,
+                                            String monthText,
+                                            String yearText,
+                                            String firstNameText,
+                                            String lastNameText,
+                                            String companyText,
+                                            String address1Text,
+                                            String address2Text,
+                                            String countryText,
+                                            String stateText,
+                                            String cityText,
+                                            String zipcodeText,
+                                            String mobileNumberText) {
         switch (title) {
             case "Mr":
                 driver.element().click(titleMale);
@@ -75,17 +75,17 @@ public class RegisterPage extends NavigationBarPage {
         driver.element().type(city, cityText);
         driver.element().type(zipcode, zipcodeText);
         driver.element().type(mobileNumber, mobileNumberText);
-        return new RegisterPage(driver);
+        return new SignupPage(driver);
     }
 
     @Step("Click Create Account Button")
-    public RegisterPage clickCreateAccountButton() {
+    public SignupPage clickCreateAccountButton() {
         driver.element().click(createAccountButton);
         return this;
     }
 
     @Step("Verify Account Created")
-    public RegisterPage verifyAccountCreated() {
+    public SignupPage verifyAccountCreated() {
         driver.validate().validateElementVisible(accountCreated);
         return this;
     }
@@ -97,7 +97,7 @@ public class RegisterPage extends NavigationBarPage {
     }
 
     @Step("Verify Enter Account Information Visible")
-    public RegisterPage verifyEnterAccountInformationVisible() {
+    public SignupPage verifyEnterAccountInformationVisible() {
         driver.validate().validateElementVisible(enterAccountInformation);
         return this;
     }
