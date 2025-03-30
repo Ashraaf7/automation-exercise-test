@@ -5,7 +5,7 @@ import com.automationexercise.utils.LogUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-public class RegisterPage extends HomePage {
+public class RegisterPage extends NavigationBarPage {
     private final By enterAccountInformation = By.cssSelector(".login-form > h2");
     private final By titleMale = By.id("id_gender1");
     private final By titleFemale = By.id("id_gender2");

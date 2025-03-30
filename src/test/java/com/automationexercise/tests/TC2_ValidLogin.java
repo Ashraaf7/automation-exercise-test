@@ -1,13 +1,12 @@
 package com.automationexercise.tests;
 
+import com.automationexercise.pages.NavigationBarPage;
 import com.automationexercise.pages.SignupLoginPage;
 import com.automationexercise.utils.TimeUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-
-public class TC1_RegisterUser extends BaseTest {
-
+public class TC2_ValidLogin extends BaseTest {
     private String name, email, titleMale, titleFemale, password, day, month, year, firstName, lastName, companyName,
             address1, address2, country, state, city, zipcode, mobileNumber;
 
@@ -34,8 +33,8 @@ public class TC1_RegisterUser extends BaseTest {
     }
 
     @Test
-    public void RegisterUser() {
-        new SignupLoginPage(driver)
+    public void RegisterUserAndLogout() {
+        new NavigationBarPage(driver)
                 .clickSignupLoginButton()
                 .verifyNewUserSignupVisible()
                 .enterRegisterName(name)
@@ -49,10 +48,18 @@ public class TC1_RegisterUser extends BaseTest {
                 .verifyAccountCreated()
                 .clickContinueButton()
                 .verifyUserName(name)
-                .clickDeleteAccountButton()
-                .verifyAccountDeleted()
-                .clickContinueButton();
+                .clickLogoutButton();
     }
 
-
+    @Test(dependsOnMethods = "RegisterUserAndLogout")
+    public void validLogin() {
+        new SignupLoginPage(driver)
+                .verifyLoginToAccountVisible()
+                .enterLoginEmail(email)
+                .enterLoginPassword(password)
+                .clickLoginButton()
+                .verifyUserName(name)
+                .clickDeleteAccountButton()
+                .verifyAccountDeleted();
+    }
 }

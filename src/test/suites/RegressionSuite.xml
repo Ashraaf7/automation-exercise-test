@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="RegressionSuite" verbose="1">
+    <test name="RegressionTest">
+        <classes>
+            <class name="com.automationexercise.tests.TC1_RegisterUser"/>
+            <class name="com.automationexercise.tests.TC2_ValidLogin"/>
+            <class name="com.automationexercise.tests.TC3_InvalidLogin"/>
+        </classes>
+    </test>
+</suite>

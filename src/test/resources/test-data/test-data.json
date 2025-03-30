@@ -18,5 +18,9 @@
     "city": "testcity",
     "zipCode": "12345",
     "mobileNumber": "1234567890"
+  },
+  "login": {
+    "invalidEmail": "invalidEmail@gmail.com",
+    "invalidPassword": "invalidPassword"
   }
 }
