@@ -9,8 +9,8 @@ public class TC3_InvalidLogin extends BaseTest {
         new NavigationBarPage(driver)
                 .clickSignupLoginButton()
                 .verifyLoginToAccountVisible()
-                .enterLoginEmail(testData.getJsonData("login.invalidEmail"))
-                .enterLoginPassword(testData.getJsonData("login.invalidPassword"))
+                .enterLoginEmail(testData.getJsonData("login.inValid.email"))
+                .enterLoginPassword(testData.getJsonData("login.inValid.password"))
                 .clickLoginButton()
                 .verifyInvalidLoginMessage();
     }

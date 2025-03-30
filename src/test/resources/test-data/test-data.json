@@ -20,7 +20,14 @@
     "mobileNumber": "1234567890"
   },
   "login": {
-    "invalidEmail": "invalidEmail@gmail.com",
-    "invalidPassword": "invalidPassword"
+    "valid": {
+      "email": "test1@drmail.in",
+      "password": "ashraf12345",
+      "name": "ashraf test"
+    },
+    "inValid": {
+      "email": "invalidEmail@gmail.com",
+      "password": "invalidPassword"
+    }
   }
 }
