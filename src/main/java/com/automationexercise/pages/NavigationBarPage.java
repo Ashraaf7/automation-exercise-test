@@ -6,11 +6,12 @@ import org.openqa.selenium.By;
 
 import static com.automationexercise.utils.ConfigUtils.getConfigValue;
 
-public class HomePage {
+public class NavigationBarPage {
     protected final GUIDriver driver;
     private final By homeButton = By.xpath("//a[.=' Home']");
     private final By productsButton = By.xpath("//a[.=' Products']");
     private final By cartButton = By.xpath("//a[.=' Cart']");
+    private final By logoutButton = By.xpath("//a[.=' Logout']");
     private final By signupLoginButton = By.xpath("//a[.=' Signup / Login']");
     private final By testCasesButton = By.xpath("//a[.=' Test Cases']");
     private final By deleteAccountButton = By.xpath("//a[.=' Delete Account']");
@@ -18,9 +19,10 @@ public class HomePage {
     private final By videoTutorials = By.xpath("//a[.=' Video Tutorials']");
     private final By contactUsButton = By.xpath("//a[.=' Contact us']");
     private final By homePageQuote = By.cssSelector("#slider-carousel h2");
+    private final By userNameLabel = By.tagName("b");
 
 
-    public HomePage(GUIDriver driver) {
+    public NavigationBarPage(GUIDriver driver) {
         this.driver = driver;
     }
 
@@ -28,7 +30,7 @@ public class HomePage {
      * Navigate to Home Page
      */
     @Step("Navigate to Home Page")
-    public HomePage navigateToHomePage() {
+    public NavigationBarPage navigateToHomePage() {
         driver.browser().navigate(getConfigValue("baseUrlWeb"));
         return this;
     }
@@ -37,7 +39,7 @@ public class HomePage {
      * Click on Home Button
      */
     @Step("Click on Home Button")
-    public HomePage clickHomeButton() {
+    public NavigationBarPage clickHomeButton() {
         driver.element().click(homeButton);
         return this;
     }
@@ -46,7 +48,7 @@ public class HomePage {
      * Click on Products Button
      */
     @Step("Click on Products Button")
-    public HomePage clickProductsButton() {
+    public NavigationBarPage clickProductsButton() {
         driver.element().click(productsButton);
         return this;
     }
@@ -55,7 +57,7 @@ public class HomePage {
      * Click on Cart Button
      */
     @Step("Click on Cart Button")
-    public HomePage clickCartButton() {
+    public NavigationBarPage clickCartButton() {
         driver.element().click(cartButton);
         return this;
     }
@@ -73,7 +75,7 @@ public class HomePage {
      * Click on Test Cases Button
      */
     @Step("Click on Test Cases Button")
-    public HomePage clickTestCasesButton() {
+    public NavigationBarPage clickTestCasesButton() {
         driver.element().click(testCasesButton);
         return this;
     }
@@ -91,7 +93,7 @@ public class HomePage {
      * Click on API Testing Button
      */
     @Step("Click on API Testing Button")
-    public HomePage clickApiButton() {
+    public NavigationBarPage clickApiButton() {
         driver.element().click(apiButton);
         return this;
     }
@@ -100,7 +102,7 @@ public class HomePage {
      * Click on Video Tutorials Button
      */
     @Step("Click on Video Tutorials Button")
-    public HomePage clickVideoTutorialsButton() {
+    public NavigationBarPage clickVideoTutorialsButton() {
         driver.element().click(videoTutorials);
         return this;
     }
@@ -109,19 +111,40 @@ public class HomePage {
      * Click on Contact Us Button
      */
     @Step("Click on Contact Us Button")
-    public HomePage clickContactUsButton() {
+    public NavigationBarPage clickContactUsButton() {
         driver.element().click(contactUsButton);
         return this;
+    }
+
+    /**
+     * Click on Logout Button
+     */
+    @Step("Click on Logout Button")
+    public SignupLoginPage clickLogoutButton() {
+        driver.element().click(logoutButton);
+        return new SignupLoginPage(driver);
     }
 
     /**
      * Verify Home Page is displayed
      */
     @Step("Verify Home Page is displayed")
-    public HomePage isHomePageDisplayed() {
+    public NavigationBarPage isHomePageDisplayed() {
         driver.validate().validateElementVisible(homePageQuote);
         return this;
     }
 
+    /**
+     * Verify user name
+     *
+     * @param userName user name
+     * @return LandingPage
+     */
+    @Step("Verify user name {userName}")
+    public LandingPage verifyUserName(String userName) {
+        String uActual = driver.element().getText(userNameLabel);
+        driver.validate().validateEquals(userName, uActual);
+        return new LandingPage(driver);
+    }
 
 }

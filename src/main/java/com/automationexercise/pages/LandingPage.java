@@ -4,8 +4,7 @@ import com.automationexercise.drivers.GUIDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-public class LandingPage extends HomePage {
-    private final By userNameLabel = By.tagName("b");
+public class LandingPage extends NavigationBarPage {
     private final By accountDeletedText = By.cssSelector("[data-qa=\"account-deleted\"]");
     private final By continueButton = By.cssSelector("[data-qa=\"continue-button\"]");
 
@@ -25,16 +24,5 @@ public class LandingPage extends HomePage {
         return this;
     }
 
-    /**
-     * Verify user name
-     *
-     * @param userName user name
-     * @return LandingPage
-     */
-    @Step("Verify user name {userName}")
-    public LandingPage verifyUserName(String userName) {
-        String uActual = driver.element().getText(userNameLabel);
-        driver.validate().validateEquals(userName, uActual);
-        return this;
-    }
+
 }

@@ -5,7 +5,7 @@ import com.automationexercise.utils.ConfigUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
-public class SignupLoginPage extends HomePage {
+public class SignupLoginPage extends NavigationBarPage {
 
     private final By nameField = By.cssSelector("[data-qa=\"signup-name\"]");
     private final By registerEmailField = By.cssSelector("[data-qa=\"signup-email\"]");
@@ -14,6 +14,8 @@ public class SignupLoginPage extends HomePage {
     private final By loginPasswordField = By.cssSelector("[data-qa=\"login-password\"]");
     private final By loginButton = By.cssSelector("[data-qa=\"login-button\"]");
     private final By newUserSignup = By.cssSelector(".signup-form > h2");
+    private final By loginToAccountLabel = By.cssSelector(".login-form > h2");
+    private final By loginErrorMsg = By.cssSelector("[action=\"/login\"] > p");
 
     public SignupLoginPage(GUIDriver driver) {
         super(driver);
@@ -59,9 +61,9 @@ public class SignupLoginPage extends HomePage {
     }
 
     @Step("Click login button")
-    public LandingPage clickLoginButton() {
+    public SignupLoginPage clickLoginButton() {
         driver.element().click(loginButton);
-        return new LandingPage(driver);
+        return new SignupLoginPage(driver);
     }
 
     //validation methods
@@ -71,4 +73,15 @@ public class SignupLoginPage extends HomePage {
         return this;
     }
 
+    @Step("verify that Login to your Account is visible")
+    public SignupLoginPage verifyLoginToAccountVisible() {
+        driver.validate().validateElementVisible(loginToAccountLabel);
+        return this;
+    }
+
+    @Step("verify that Login Error message is visible")
+    public SignupLoginPage verifyInvalidLoginMessage() {
+        driver.validate().validateElementVisible(loginErrorMsg);
+        return this;
+    }
 }
