@@ -44,7 +44,7 @@
         <gsonVersion>2.12.1</gsonVersion>
         <allure.version>2.29.1</allure.version>
         <javaFaker>1.0.2</javaFaker>
-        <surefire>3.5.2</surefire>
+        <surefire>3.5.3</surefire>
         <aspectj.version>1.9.23</aspectj.version>
         <commonIO>2.18.0</commonIO>
         <shutterBugVersion>1.6</shutterBugVersion>
