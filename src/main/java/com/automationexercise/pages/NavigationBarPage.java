@@ -75,9 +75,9 @@ public class NavigationBarPage {
      * Click on Test Cases Button
      */
     @Step("Click on Test Cases Button")
-    public NavigationBarPage clickTestCasesButton() {
+    public TestCasesPage clickTestCasesButton() {
         driver.element().click(testCasesButton);
-        return this;
+        return new TestCasesPage(driver);
     }
 
     /**
