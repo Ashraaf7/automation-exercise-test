@@ -7,6 +7,8 @@
             <class name="com.automationexercise.tests.TC3_InvalidLogin"/>
             <class name="com.automationexercise.tests.TC4_Logout"/>
             <class name="com.automationexercise.tests.TC5_RegisterExistingEmail"/>
+            <class name="com.automationexercise.tests.TC6_ContactUs"/>
+            <class name="com.automationexercise.tests.TC7_TestCases"/>
         </classes>
     </test>
 </suite>
