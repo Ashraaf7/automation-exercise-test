@@ -68,4 +68,7 @@ public class GUIDriver {
         return new Validations(get());
     }
 
+    public AlertUtils alert() {
+        return new AlertUtils(get());
+    }
 }

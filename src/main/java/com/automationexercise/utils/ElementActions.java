@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.List;
 
 
@@ -78,9 +79,10 @@ public class ElementActions {
      * @param by       passes an element of object type By
      * @param filePath absolute path to the file
      */
-    public void uploadFileWithSendKeys(By by, String filePath) {
-        type(by, filePath);
-        LogUtils.info("Upload File with SendKeys");
+    public void uploadFile(By by, String filePath) {
+        String fileAbsluted = System.getProperty("user.dir") + File.separator + filePath;
+        type(by, fileAbsluted);
+        LogUtils.info("Upload File successfully: " + fileAbsluted);
     }
 
     //TODO: Send data to element after checking visibility
