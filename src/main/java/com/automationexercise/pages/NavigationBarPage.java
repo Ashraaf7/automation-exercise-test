@@ -111,9 +111,9 @@ public class NavigationBarPage {
      * Click on Contact Us Button
      */
     @Step("Click on Contact Us Button")
-    public NavigationBarPage clickContactUsButton() {
+    public ContactUsPage clickContactUsButton() {
         driver.element().click(contactUsButton);
-        return this;
+        return new ContactUsPage(driver);
     }
 
     /**

@@ -29,5 +29,13 @@
       "email": "invalidEmail@gmail.com",
       "password": "invalidPassword"
     }
+  },
+  "contactUs": {
+    "name": "testname",
+    "email": "testemail@gmail.com",
+    "subject": "testsubject",
+    "message": "testmessage",
+    "filePath": "src/test/resources/test-data/testfile.txt",
+    "successMessage": "Success! Your details have been submitted successfully."
   }
 }
