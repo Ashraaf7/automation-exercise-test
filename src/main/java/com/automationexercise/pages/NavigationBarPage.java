@@ -9,7 +9,7 @@ import static com.automationexercise.utils.ConfigUtils.getConfigValue;
 public class NavigationBarPage {
     protected final GUIDriver driver;
     private final By homeButton = By.xpath("//a[.=' Home']");
-    private final By productsButton = By.xpath("//a[.=' Products']");
+    private final By productsButton = By.cssSelector("a[href='/products']");
     private final By cartButton = By.xpath("//a[.=' Cart']");
     private final By logoutButton = By.xpath("//a[.=' Logout']");
     private final By signupLoginButton = By.xpath("//a[.=' Signup / Login']");
@@ -48,9 +48,9 @@ public class NavigationBarPage {
      * Click on Products Button
      */
     @Step("Click on Products Button")
-    public NavigationBarPage clickProductsButton() {
+    public AllProductsPage clickProductsButton() {
         driver.element().click(productsButton);
-        return this;
+        return new AllProductsPage(driver);
     }
 
     /**
