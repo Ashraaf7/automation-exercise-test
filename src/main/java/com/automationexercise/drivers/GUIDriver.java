@@ -1,6 +1,8 @@
 package com.automationexercise.drivers;
 
 import com.automationexercise.utils.*;
+import com.automationexercise.validations.Assertions;
+import com.automationexercise.validations.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 
 import static org.testng.Assert.fail;
@@ -64,8 +66,12 @@ public class GUIDriver {
         return new FrameActions(get());
     }
 
-    public Validations validate() {
-        return new Validations(get());
+    public Assertions validate() {
+        return new Assertions(element(), new Waits(get()), get());
+    }
+
+    public SoftAssertions softValidate() {
+        return new SoftAssertions(element(), new Waits(get()), get());
     }
 
     public AlertUtils alert() {

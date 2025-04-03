@@ -1,6 +1,7 @@
 package com.automationexercise.listeners;
 
 import com.automationexercise.utils.*;
+import com.automationexercise.validations.SoftAssertions;
 import org.testng.*;
 
 import java.io.File;
@@ -60,7 +61,7 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     public void afterInvocation(IInvokedMethod method, ITestResult result) {
         if (method.isTestMethod()) {
             //ScreenRecorderUtils.stopRecording(result.getName());
-            SoftAssertionUtils.softAssertAll(result);
+            SoftAssertions.assertAll(result);
             // For Test Methods: Log and Take Screenshot
             switch (result.getStatus()) {
                 case ITestResult.SUCCESS -> ScreenshotUtils.takeScreenShot("passed-" + result.getName());
