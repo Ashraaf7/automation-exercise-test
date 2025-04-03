@@ -9,6 +9,7 @@
             <class name="com.automationexercise.tests.TC5_RegisterExistingEmail"/>
             <class name="com.automationexercise.tests.TC6_ContactUs"/>
             <class name="com.automationexercise.tests.TC7_TestCases"/>
+            <class name="com.automationexercise.tests.TC8_VerifyAllProducts"/>
         </classes>
     </test>
 </suite>
