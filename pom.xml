@@ -55,7 +55,7 @@
         <monteScreenRecorder>0.7.7.0</monteScreenRecorder>
         <allure-environment-writer>1.0.0</allure-environment-writer>
         <allure.executable>allure-2.27.0/bin/allure</allure.executable>
-        <apachePoi>5.4.0</apachePoi>
+        <apachePoi>5.4.1</apachePoi>
         <json.path.version>2.9.0</json.path.version>
         <restAssured.version>5.5.1</restAssured.version>
         <jansiVersion>2.4.1</jansiVersion>
