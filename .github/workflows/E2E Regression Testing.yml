@@ -10,10 +10,10 @@ on:
   schedule:
     - cron: '00 4 * * *'
   workflow_dispatch:
-    
+
 
 env:
-  TESTING_SCOPE: "%regex[.*Test.*],com.tests.**.**,com.tests.**"
+  TESTING_SCOPE: "%regex[.*Test.*],com.automationexercise.tests.**.**,com.tests.**"
 
 jobs:
 
