@@ -13,8 +13,7 @@ on:
 
 
 env:
-  TESTING_SCOPE: "%regex[com\\.automationexercise\\.tests\\..*]"
-
+  TESTING_SCOPE: "com.automationexercise.tests.**"
 
 jobs:
 
@@ -104,4 +103,4 @@ jobs:
         with:
           check_name: "Tests Results Edge_Windows"
           files: |
-            test-outputs/target/surefire-reports/TEST-*.xml
+            test-outputs/target/surefire-report/TEST-*.xml
