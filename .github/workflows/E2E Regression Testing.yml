@@ -48,18 +48,7 @@ jobs:
           name: Chrome_Linux_Allure
           path: "test-outputs/reports/*.html"
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.8
-      - name: Publish Test Results
-        continue-on-error: true
-        uses: EnricoMi/publish-unit-test-result-action/linux@v2
-        if: always()
-        with:
-          check_name: "Tests Results Chrome_Linux"
-          files: |
-            test-outputs/target/surefire-reports/TEST-*.xml
+
 
   E2E_Edge_Windows_Test:
     runs-on: windows-latest
@@ -92,15 +81,3 @@ jobs:
           name: Edge_Windows_Allure
           path: "test-outputs/reports/*.html"
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.8
-      - name: Publish Test Results
-        continue-on-error: true
-        uses: EnricoMi/publish-unit-test-result-action/windows@v2
-        if: always()
-        with:
-          check_name: "Tests Results Edge_Windows"
-          files: |
-            test-outputs/target/surefire-report/TEST-*.xml
