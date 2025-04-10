@@ -13,7 +13,7 @@ on:
 
 
 env:
-  TESTING_SCOPE: "%regex[.*Test.*],com.automationexercise.tests.**.**,com.tests.**"
+  TESTING_SCOPE: "%regex[com.automationexercise.tests.**]"
 
 jobs:
 
