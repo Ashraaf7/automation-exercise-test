@@ -112,21 +112,35 @@ public class FilesUtils {
         }
     }
 
-    public static void deleteSpecificFiles(String dirPath, String... ExcludedFileNames) {
+    public static void deleteSpecificFiles(String dirPath, String... excludedFileNames) {
         Path directory = Paths.get(dirPath);
-        Set<String> excludedFiles = Set.of(ExcludedFileNames);
+
+        if (!Files.exists(directory)) {
+            LogUtils.warn("Directory does not exist: " + dirPath);
+            return;
+        }
+
+        Set<String> excludedFiles = Set.of(excludedFileNames);
 
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
             for (Path file : stream) {
-                if (!excludedFiles.contains(file.getFileName().toString())) {
-                    FileUtils.forceDelete(new File(file.toString()));
-                    LogUtils.info("File deleted: " + file);
+                String fileName = file.getFileName().toString();
+                if (!excludedFiles.contains(fileName)) {
+                    try {
+                        FileUtils.forceDelete(file.toFile());
+                        LogUtils.info("File deleted: " + fileName);
+                    } catch (IOException ex) {
+                        LogUtils.error("Failed to delete file: " + fileName + " due to: " + ex.getMessage());
+                    }
+                } else {
+                    LogUtils.info("Excluded file retained: " + fileName);
                 }
             }
         } catch (IOException e) {
-            LogUtils.error("Failed to delete files: " + e.getMessage());
+            LogUtils.error("Failed to access directory: " + dirPath + " due to: " + e.getMessage());
         }
     }
+
 
     /**
      * Copies a file from sourceFilePath to destinationFilePath on the local storage

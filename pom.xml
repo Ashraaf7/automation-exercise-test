@@ -92,7 +92,7 @@
                     <encoding>UTF-8</encoding>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <argLine>
-                        -javaagent:${user.home}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
 
                 </configuration>
