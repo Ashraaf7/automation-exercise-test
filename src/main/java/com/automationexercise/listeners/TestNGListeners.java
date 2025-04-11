@@ -27,15 +27,11 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         copyHistory();
         LogUtils.info("History copied");
 
-        String cleanAllure = ConfigUtils.getConfigValue("CleanAllureReport");
         String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
-
-        if ("true".equalsIgnoreCase(cleanAllure)) {
-            if ("true".equalsIgnoreCase(cleanHistory)) {
-                FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
-            }
-            FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
+        if ("true".equalsIgnoreCase(cleanHistory)) {
+            FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
         }
+        FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
 
         cleanTestOutputDirectories();
         createTestOutputDirectories();

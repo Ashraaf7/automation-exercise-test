@@ -118,7 +118,7 @@ public class FilesUtils {
 
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
             for (Path file : stream) {
-                if (Files.isRegularFile(file) && !excludedFiles.contains(file.getFileName().toString())) {
+                if (!excludedFiles.contains(file.getFileName().toString())) {
                     Files.delete(file);
                     LogUtils.info("File deleted: " + file);
                 }

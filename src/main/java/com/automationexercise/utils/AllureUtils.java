@@ -188,7 +188,7 @@ public class AllureUtils {
     }
 
     public static void openAllureReport(String newFileName) {
-        if (!ConfigUtils.getConfigValue("OpenAllureReportAfterExecution").equalsIgnoreCase("true")) {
+        if (!ConfigUtils.getConfigValue("OpenAllureReportAfterExecution").equalsIgnoreCase("true") || !ConfigUtils.getConfigValue("executionType").equalsIgnoreCase("Local")) {
             return;
         }
 
@@ -215,8 +215,8 @@ public class AllureUtils {
                 FileUtils.copyDirectory(historyDir, allureResultsDir);
                 LogUtils.info("History copied successfully");
             }
-            FileUtils.deleteDirectory(new File(FULL_ALLURE_REPORT_PATH));
-            LogUtils.info("History deleted successfully");
+            FilesUtils.cleanDirectory(new File(FULL_ALLURE_REPORT_PATH));
+            LogUtils.info("Results folder cleaned successfully");
         } catch (Exception e) {
             LogUtils.error(e.getMessage());
         }
