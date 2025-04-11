@@ -17,39 +17,39 @@ env:
 
 jobs:
 
-E2E_Chrome_Linux_Test:
-  runs-on: ubuntu-latest
-  permissions:
-    contents: write
-    issues: write
-    checks: write
-    pull-requests: write
-  steps:
-    - name: Set execute permissions for Allure binary
-      run: chmod +x /home/runner/.m2/repository/allure/allure-2.33.0/bin/allure
-      
-    - name: Checkout Code
-      uses: actions/checkout@v4
-    - name: Setup JDK 21
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'oracle'
-        java-version: '21'
-    - name: Set up Maven
-      uses: stCarolas/setup-maven@v5
-      with:
-        maven-version: 3.9.6
+  E2E_Chrome_Linux_Test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Set execute permissions for Allure binary
+        run: chmod +x /home/runner/.m2/repository/allure/allure-2.33.0/bin/allure
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: '21'
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.6
 
 
-    - name: Run Tests
-      continue-on-error: true
-      run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -Dtest="${TESTING_SCOPE}" clean test
+      - name: Run Tests
+        continue-on-error: true
+        run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -Dtest="${TESTING_SCOPE}" clean test
 
-    - name: Upload Allure Report as Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Chrome_Linux_Allure
-        path: "test-outputs/reports/*.html"
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Chrome_Linux_Allure
+          path: "test-outputs/reports/*.html"
 
 
 
