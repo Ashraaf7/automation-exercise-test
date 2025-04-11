@@ -29,10 +29,6 @@
         <url></url>
     </scm>
     <properties>
-        <!-- Build Commands-->
-        <installToLocalRepository>mvn clean install -DskipTests</installToLocalRepository>
-        <!-- Deploy Commands -->
-        <deployToMavenCentral>mvn clean deploy -DskipTests</deployToMavenCentral>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,14 +64,6 @@
         <plugins>
 
             <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>${allureMaven}</version>
-                <configuration>
-                    <reportVersion>${allure.version}</reportVersion>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire}</version>
@@ -84,16 +72,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                 </configuration>
-
-
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec-maven-plugin}</version>
-
-            </plugin>
-
         </plugins>
     </build>
 
