@@ -32,10 +32,7 @@ public class AllureUtils {
 
     private static String getAllureExecutable() {
         // Dynamically set the Allure binary path if it's not set yet
-        if (ALLURE_BINARY_PATH.isEmpty()) {
-            ALLURE_BINARY_PATH = ALLURE_EXTRACTION_LOCATION + "allure-" + ALLURE_VERSION + File.separator + "bin" + File.separator + "allure";
-        }
-
+        ALLURE_BINARY_PATH = ALLURE_EXTRACTION_LOCATION + "allure-" + ALLURE_VERSION + File.separator + "bin" + File.separator + "allure";
         if (OS.getCurrentOS() == OS.WINDOWS) {
             return ALLURE_BINARY_PATH + ".bat";
         }
@@ -120,7 +117,7 @@ public class AllureUtils {
     }
 
     private static void setUnixExecutePermissions() {
-        //TerminalUtils.executeTerminalCommand("chmod", "u+x", ALLURE_BINARY_PATH);
+        TerminalUtils.executeTerminalCommand("chmod", "u+x", ALLURE_BINARY_PATH);
     }
 
     public static String urlConnection(String url) {
