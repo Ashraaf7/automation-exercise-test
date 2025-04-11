@@ -235,13 +235,28 @@ public class AllureUtils {
     //TODO: Attach the Logs to Allure
     public static void attachLogsToAllure() {
         try {
+            // Get the latest log file
             File logFile = FilesUtils.getLatestFile(LogUtils.LOGS_PATH);
-            assert logFile != null;
-            Allure.addAttachment("logs.log", java.nio.file.Files.readString(Path.of(logFile.getPath())));
+
+            // Check if the log file exists and is not null
+            if (logFile == null || !logFile.exists()) {
+                LogUtils.error("Log file not found or does not exist.");
+                return;
+            }
+
+            // Read the content of the log file and attach it to Allure
+            String logContent = java.nio.file.Files.readString(Path.of(logFile.getPath()));
+            Allure.addAttachment("logs.log", logContent);
+
+        } catch (IOException e) {
+            // Handle IO exceptions (e.g., file read issues)
+            LogUtils.error("Error reading log file: " + e.getMessage());
         } catch (Exception e) {
-            LogUtils.error(e.getMessage());
+            // Catch any other unexpected exceptions
+            LogUtils.error("Unexpected error: " + e.getMessage());
         }
     }
+
 
     //TODO: Attach the Records to Allure
     public static void attachRecordsToAllure() {
