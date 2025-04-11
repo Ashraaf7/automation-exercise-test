@@ -119,7 +119,7 @@ public class FilesUtils {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
             for (Path file : stream) {
                 if (!excludedFiles.contains(file.getFileName().toString())) {
-                    Files.delete(file);
+                    FileUtils.forceDelete(new File(file.toString()));
                     LogUtils.info("File deleted: " + file);
                 }
             }
