@@ -20,8 +20,8 @@ jobs:
   E2E_Chrome_Linux_Test:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      issues: read
+      contents: write
+      issues: write
       checks: write
       pull-requests: write
     steps:
@@ -53,8 +53,8 @@ jobs:
   E2E_Edge_Windows_Test:
     runs-on: windows-latest
     permissions:
-      contents: read
-      issues: read
+      contents: write
+      issues: write
       checks: write
       pull-requests: write
     steps:

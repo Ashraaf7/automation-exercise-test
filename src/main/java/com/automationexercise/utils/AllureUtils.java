@@ -120,7 +120,7 @@ public class AllureUtils {
     }
 
     private static void setUnixExecutePermissions() {
-        //  TerminalUtils.executeTerminalCommand("chmod", "u+x", ALLURE_BINARY_PATH);
+        //TerminalUtils.executeTerminalCommand("chmod", "u+x", ALLURE_BINARY_PATH);
     }
 
     public static String urlConnection(String url) {
