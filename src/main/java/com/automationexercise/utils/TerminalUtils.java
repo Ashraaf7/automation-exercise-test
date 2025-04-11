@@ -1,19 +1,21 @@
 package com.automationexercise.utils;
 
-public class TerminalUtils {
-    private TerminalUtils() {
-        super();
-    }
+import java.io.IOException;
+import java.util.Arrays;
 
-    public static void executeTerminalCommand(String... command) {
+public class TerminalUtils {
+
+    public static void executeTerminalCommand(String... commandParts) {
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder(command);
-            processBuilder.inheritIO(); // Redirect input/output to the current process
-            Process process = processBuilder.start();
-            process.waitFor(); // Wait for the command to complete
-            LogUtils.info("Command executed successfully: " + String.join(" ", command));
-        } catch (Exception e) {
-            LogUtils.error("Failed to execute command: " + e.getMessage());
+            ProcessBuilder builder = new ProcessBuilder(commandParts);
+            builder.inheritIO(); // Optional: inherit IO for logging output directly
+            Process process = builder.start();
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                LogUtils.error("Command failed with exit code: " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            LogUtils.error("Failed to execute terminal command: " + Arrays.toString(commandParts), e.getMessage());
         }
     }
 }

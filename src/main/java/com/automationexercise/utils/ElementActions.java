@@ -218,7 +218,6 @@ public class ElementActions {
     public void scrollToElementAtTop(By locator) {
         waits.waitForElementPresent(locator);
         getJsExecutor().executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
-        LogUtils.info("Scroll to element " + locator);
     }
 
     //TODO:  Scroll to specific element

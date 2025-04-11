@@ -25,38 +25,26 @@ public class Waits {
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
     }
 
-    //wait for element to be present
+    // Wait for element to be present
     public WebElement waitForElementPresent(By locator) {
-        //code
-        LogUtils.info("Waiting for element to be present: ", locator.toString());
-        return wait.until(driver1 ->
-                driver1.findElement(locator));
+        return wait.until(driver -> driver.findElement(locator));
     }
 
-    //wait for element to be visible
-    public WebElement waitForElementVisible(By locator) {
-        //code
-        LogUtils.info("Waiting for element to be visible: ", locator.toString());
-        return wait.until(driver1 ->
-                {
-                    WebElement element = waitForElementPresent(locator);
-                    return element.isDisplayed() ? element : null;
-                }
-        );
+    // Wait for element to be visible (re-find the element each time to avoid staleness)
+    public void waitForElementVisible(By locator) {
+        wait.until(driver -> {
+            WebElement element = driver.findElement(locator);
+            return element.isDisplayed() ? element : null;
+        });
     }
 
-    //wait for element to be clickable
-    public WebElement waitForElementClickable(By locator) {
-        //code
-        LogUtils.info("Waiting for element to be clickable: ", locator.toString());
-        return wait.until(driver1 ->
-                {
-                    WebElement element = waitForElementVisible(locator);
-                    return element.isEnabled() ? element : null;
-                }
-        );
+    // Wait for element to be clickable (re-find each time)
+    public void waitForElementClickable(By locator) {
+        wait.until(driver -> {
+            WebElement element = driver.findElement(locator);
+            return (element.isDisplayed() && element.isEnabled()) ? element : null;
+        });
     }
-
 
     public boolean waitForPageTitle(String title) {
         try {

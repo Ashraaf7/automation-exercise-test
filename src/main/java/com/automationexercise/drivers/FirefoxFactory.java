@@ -19,7 +19,7 @@ public class FirefoxFactory extends AbstractDriver implements WebDriverOptionsAb
         firefoxOptions.addArguments("--disable-notifications");
         firefoxOptions.addArguments("--remote-allow-origins=*");
         if (executionType.equalsIgnoreCase("LocalHeadless") || executionType.equalsIgnoreCase("Remote")) {
-            firefoxOptions.addArguments("--headless");
+            firefoxOptions.addArguments("--headless=new");
         }
         firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         firefoxOptions.setAcceptInsecureCerts(true);

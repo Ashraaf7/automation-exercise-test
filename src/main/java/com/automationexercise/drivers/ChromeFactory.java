@@ -29,7 +29,7 @@ public class ChromeFactory extends AbstractDriver implements WebDriverOptionsAbs
         options.addArguments("--remote-allow-origins=*");
         options.setPageLoadStrategy(PageLoadStrategy.NONE);
         if (executionType.equalsIgnoreCase("LocalHeadless") || executionType.equalsIgnoreCase("Remote"))
-            options.addArguments("--headless");
+            options.addArguments("--headless=new");
         options.setAcceptInsecureCerts(true);
 
         return options;
