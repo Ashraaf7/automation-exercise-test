@@ -6,6 +6,7 @@ import org.testng.*;
 
 import java.io.File;
 
+import static com.automationexercise.utils.AllureUtils.FULL_ALLURE_REPORT_PATH;
 import static com.automationexercise.utils.AllureUtils.copyHistory;
 import static com.automationexercise.utils.PropertiesUtils.loadProperties;
 
@@ -27,12 +28,6 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         copyHistory();
         LogUtils.info("History copied");
 
-        String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
-        if ("true".equalsIgnoreCase(cleanHistory)) {
-            FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
-        }
-        FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
-
         cleanTestOutputDirectories();
         createTestOutputDirectories();
         LogUtils.info("Directories cleaned and created");
@@ -42,8 +37,14 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     }
 
     private void cleanTestOutputDirectories() {
+        FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
+        String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
+        if ("true".equalsIgnoreCase(cleanHistory)) {
+            FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
+        }
         FilesUtils.cleanDirectory(screenshots);
         FilesUtils.cleanDirectory(reports);
+        FilesUtils.cleanDirectory(new File(FULL_ALLURE_REPORT_PATH));
         FilesUtils.cleanDirectory(logs);
         FilesUtils.cleanDirectory(recordings);
     }

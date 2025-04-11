@@ -188,7 +188,7 @@ public class AllureUtils {
     }
 
     public static void openAllureReport(String newFileName) {
-        if (!ConfigUtils.getConfigValue("OpenAllureReportAfterExecution").equalsIgnoreCase("true") || !ConfigUtils.getConfigValue("executionType").equalsIgnoreCase("Local")) {
+        if (!ConfigUtils.getConfigValue("OpenAllureReportAfterExecution").equalsIgnoreCase("true")) {
             return;
         }
 
@@ -213,10 +213,7 @@ public class AllureUtils {
             File allureResultsDir = new File(System.getProperty("user.dir") + File.separator + ALLURE_RESULTS_FOLDER_PATH + File.separator + "history");
             if (historyDir.exists()) {
                 FileUtils.copyDirectory(historyDir, allureResultsDir);
-                LogUtils.info("History copied successfully");
             }
-            FilesUtils.cleanDirectory(new File(FULL_ALLURE_REPORT_PATH));
-            LogUtils.info("Results folder cleaned successfully");
         } catch (Exception e) {
             LogUtils.error(e.getMessage());
         }
