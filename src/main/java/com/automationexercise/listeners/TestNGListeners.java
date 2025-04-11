@@ -20,24 +20,45 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     @Override
     public void onExecutionStart() {
         LogUtils.info("Test Execution started");
+
         loadProperties();
+        LogUtils.info("Properties loaded");
+
         copyHistory();
-        if (ConfigUtils.getConfigValue("CleanAllureReport").equalsIgnoreCase("true")) {
-            if (ConfigUtils.getConfigValue("cleanHistory").equalsIgnoreCase("true")) {
-                FilesUtils.deleteFiles(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
+        LogUtils.info("History copied");
+
+        String cleanAllure = ConfigUtils.getConfigValue("CleanAllureReport");
+        String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
+
+        if ("true".equalsIgnoreCase(cleanAllure)) {
+            if ("true".equalsIgnoreCase(cleanHistory)) {
+                FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
             }
             FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
         }
+
+        cleanTestOutputDirectories();
+        createTestOutputDirectories();
+        LogUtils.info("Directories cleaned and created");
+
+        AllureUtils.setAllureEnvironment();
+        LogUtils.info("Allure environment set");
+    }
+
+    private void cleanTestOutputDirectories() {
         FilesUtils.cleanDirectory(screenshots);
         FilesUtils.cleanDirectory(reports);
         FilesUtils.cleanDirectory(logs);
         FilesUtils.cleanDirectory(recordings);
+    }
+
+    private void createTestOutputDirectories() {
         FilesUtils.createDirs(LogUtils.LOGS_PATH);
         FilesUtils.createDirs(ScreenshotUtils.SCREENSHOTS_PATH);
         FilesUtils.createDirs(ScreenRecorderUtils.RECORDINGS_PATH);
         FilesUtils.createDirs(AllureUtils.ALLURE_REPORT_PATH);
-        AllureUtils.setAllureEnvironment();
     }
+
 
     @Override
     public void onExecutionFinish() {
@@ -97,7 +118,7 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     }
 
     public void onFinish(ISuite suite) {
-        
+
     }
 
 }

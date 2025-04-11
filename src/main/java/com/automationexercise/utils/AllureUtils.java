@@ -17,9 +17,9 @@ import java.util.zip.ZipInputStream;
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 public class AllureUtils {
-    public static final String ALLURE_REPORT_PATH = "test-outputs\\reports";
-    public static final String FULL_ALLURE_REPORT_PATH = "test-outputs\\full-report";
-    public static final String ALLURE_RESULTS_FOLDER_PATH = "test-outputs\\allure-results";
+    public static final String ALLURE_REPORT_PATH = "test-outputs/reports";
+    public static final String FULL_ALLURE_REPORT_PATH = "test-outputs/full-report";
+    public static final String ALLURE_RESULTS_FOLDER_PATH = "test-outputs/allure-results";
     private static final String USER_HOME = ConfigUtils.getConfigValue("user.home");
     private static final String ALLURE_EXTRACTION_LOCATION = USER_HOME + File.separator + ".m2" + File.separator + "repository" + File.separator + "allure" + File.separator;
     private static String ALLURE_VERSION = "";
