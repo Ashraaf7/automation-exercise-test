@@ -117,6 +117,9 @@ public class AllureUtils {
     }
 
     private static void setUnixExecutePermissions() {
+        if (ALLURE_BINARY_PATH == null || ALLURE_BINARY_PATH.isEmpty()) {
+            ALLURE_BINARY_PATH = getAllureExecutable();
+        }
         TerminalUtils.executeTerminalCommand("chmod", "u+x", ALLURE_BINARY_PATH);
     }
 
