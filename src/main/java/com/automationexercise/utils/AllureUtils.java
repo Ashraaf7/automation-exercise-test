@@ -237,7 +237,6 @@ public class AllureUtils {
         try {
             // Get the latest log file
             File logFile = FilesUtils.getLatestFile(LogUtils.LOGS_PATH);
-
             // Check if the log file exists and is not null
             if (logFile == null || !logFile.exists()) {
                 LogUtils.error("Log file not found or does not exist.");

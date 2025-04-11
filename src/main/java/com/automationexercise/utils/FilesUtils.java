@@ -41,6 +41,7 @@ public class FilesUtils {
             return null;
         //Files already sorted because we named it using timestamp, so I comment this line.
         Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+        LogUtils.info("Latest file: " + files[0].getName());
         return files[0];
     }
 

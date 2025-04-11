@@ -25,9 +25,6 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Set execute permissions for Allure binary
-        run: chmod +x /home/runner/.m2/repository/allure/allure-2.33.0/bin/allure
-
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Setup JDK 21
