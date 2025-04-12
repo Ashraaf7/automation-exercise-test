@@ -42,6 +42,9 @@ jobs:
         continue-on-error: true
         run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dbasedir="${{ github.workspace }}" -Dtest="com.automationexercise.tests.TC*" clean test
 
+      - name: Print GitHub Workspace
+        run: echo "GitHub workspace is ${{ github.workspace }}"
+
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
