@@ -3,7 +3,6 @@ package com.automationexercise.utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -26,25 +25,20 @@ public class Waits {
     }
 
     // Wait for element to be present
-    public WebElement waitForElementPresent(By locator) {
-        return wait.until(driver -> driver.findElement(locator));
+    public void waitForElementPresent(By locator) {
+        wait.until(driver -> driver.findElement(locator)); // No changes needed here
     }
 
     // Wait for element to be visible (re-find the element each time to avoid staleness)
     public void waitForElementVisible(By locator) {
-        wait.until(driver -> {
-            WebElement element = driver.findElement(locator);
-            return element.isDisplayed() ? element : null;
-        });
+        wait.until(driver -> driver.findElement(locator).isDisplayed());
     }
 
-    // Wait for element to be clickable (re-find each time)
+    // Wait for element to be clickable (re-find each time to avoid staleness)
     public void waitForElementClickable(By locator) {
-        wait.until(driver -> {
-            WebElement element = driver.findElement(locator);
-            return (element.isDisplayed() && element.isEnabled()) ? element : null;
-        });
+        wait.until(driver -> (driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled()));
     }
+
 
     public boolean waitForPageTitle(String title) {
         try {
@@ -77,7 +71,7 @@ public class Waits {
 
     public boolean waitForElementHasAttribute(By by, String attributeName) {
         try {
-            return wait.until(ExpectedConditions.attributeToBeNotEmpty(Objects.requireNonNull(waitForElementPresent(by)), attributeName));
+            return wait.until(ExpectedConditions.attributeToBeNotEmpty(driver.findElement(by), attributeName));
         } catch (Throwable error) {
             LogUtils.error("Timeout for element " + by.toString() + " to exist attribute: " + attributeName);
         }

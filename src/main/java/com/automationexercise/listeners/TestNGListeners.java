@@ -21,16 +21,15 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     @Override
     public void onExecutionStart() {
         LogUtils.info("Test Execution started");
-
+        cleanTestOutputDirectories();
+        createTestOutputDirectories();
+        LogUtils.info("Directories cleaned and created");
         loadProperties();
         LogUtils.info("Properties loaded");
 
         copyHistory();
         LogUtils.info("History copied");
 
-        cleanTestOutputDirectories();
-        createTestOutputDirectories();
-        LogUtils.info("Directories cleaned and created");
 
         AllureUtils.setAllureEnvironment();
         LogUtils.info("Allure environment set");
