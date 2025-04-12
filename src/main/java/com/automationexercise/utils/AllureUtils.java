@@ -55,7 +55,6 @@ public class AllureUtils {
 
         TerminalUtils.executeTerminalCommand(command.toArray(new String[0]));
 
-        LogUtils.info("Allure Report Generated Successfully on " + OS.getCurrentOS());
     }
 
     public static void setAllureEnvironment() {
@@ -175,10 +174,12 @@ public class AllureUtils {
     // Method to generate Allure Report programmatically
     public static void generateAllureReport() {
         generateReport(ALLURE_REPORT_PATH, true);
+        LogUtils.info("Allure Report Generated Successfully on " + OS.getCurrentOS());
     }
 
     public static void generateFullAllureReport() {
         generateReport(FULL_ALLURE_REPORT_PATH, false);
+        LogUtils.info("Full Allure Report Generated Successfully on " + OS.getCurrentOS());
     }
 
     public static String renameAllureReport() {
