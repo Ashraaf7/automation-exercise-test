@@ -78,6 +78,9 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <excludes>
+                        <exclude>**/BaseTest.java</exclude>
+                    </excludes>
                     <systemPropertyVariables>
                         <testng.dtd.http>true</testng.dtd.http>
                     </systemPropertyVariables>
