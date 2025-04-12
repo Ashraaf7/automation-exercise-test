@@ -35,14 +35,16 @@ public class FilesUtils {
 
     public static File getLatestFile(String folderPath) {
         File folder = new File(folderPath);
-        File[] files = folder.listFiles();
-        assert files != null;
-        if (files.length == 0)
+        File[] files = folder.listFiles((dir, name) -> name.startsWith("log_")); // Only consider files starting with 'log_'
+        if (files == null || files.length == 0) {
+            LogUtils.warn("No files found in the directory: " + folderPath);
             return null;
-        //Files already sorted because we named it using timestamp, so I comment this line.
+        }
+
         Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
         return files[0];
     }
+
 
     public static void deleteFiles(File dirPath) {
         if (dirPath == null || !dirPath.exists()) {

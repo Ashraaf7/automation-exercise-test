@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -234,7 +235,9 @@ public class AllureUtils {
     public static void attachLogsToAllure() {
         try {
             // Get the latest log file
-            File logFile = FilesUtils.getLatestFile(LogUtils.LOGS_PATH);
+            Path logPath = Paths.get(LogUtils.LOGS_PATH);
+            LogUtils.info("Log Path: " + logPath.toAbsolutePath());
+            File logFile = FilesUtils.getLatestFile(logPath.toAbsolutePath().toString());
             // Check if the log file exists and is not null
             if (logFile == null || !logFile.exists()) {
                 LogUtils.error("Log file not found or does not exist.");
