@@ -78,7 +78,7 @@ jobs:
 
       - name: Run Tests
         continue-on-error: true
-        run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${TESTING_SCOPE}"  clean test
+        run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="$TESTING_SCOPE"  clean test
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
