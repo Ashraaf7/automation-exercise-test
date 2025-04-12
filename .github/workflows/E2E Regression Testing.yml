@@ -40,7 +40,7 @@ jobs:
 
       - name: Run Tests
         continue-on-error: true
-        run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*" clean test
+        run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dbasedir="${github.workspace}" -Dtest="com.automationexercise.tests.TC*" clean test
 
 
       - name: Upload Allure Report as Artifact
@@ -73,7 +73,7 @@ jobs:
 
       - name: Run Tests
         continue-on-error: true
-        run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*"  clean test
+        run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dbasedir="${github.workspace}" -Dtest="com.automationexercise.tests.TC*"  clean test
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
