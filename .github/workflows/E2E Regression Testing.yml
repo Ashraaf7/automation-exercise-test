@@ -37,13 +37,13 @@ jobs:
         with:
           maven-version: 3.9.6
 
+      - name: Set permissions for github.workspace
+        run: sudo chmod -R 777 $GITHUB_WORKSPACE
 
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dbasedir="${{ github.workspace }}" -Dtest="com.automationexercise.tests.TC*" clean test
 
-      - name: Print GitHub Workspace
-        run: echo "GitHub workspace is ${{ github.workspace }}"
 
 
       - name: Upload Allure Report as Artifact
