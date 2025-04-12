@@ -58,9 +58,7 @@
         <suite.regression>src/test/suites/RegressionSuite.xml</suite.regression>
     </properties>
     <build>
-
         <directory>test-outputs/target</directory>
-
         <plugins>
 
             <plugin>
@@ -83,24 +81,37 @@
                     <systemPropertyVariables>
                         <testng.dtd.http>true</testng.dtd.http>
                     </systemPropertyVariables>
-                    <forkCount>0</forkCount>
-                    <reuseForks>false</reuseForks>
                     <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
                     <failIfNoTests>false</failIfNoTests>
                     <trimStackTrace>false</trimStackTrace>
                     <useFile>false</useFile>
                     <encoding>UTF-8</encoding>
-                    <useSystemClassLoader>false</useSystemClassLoader>
                     <argLine>
-                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                        -javaagent:${user.home}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
-
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
+    <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-bom</artifactId>
+                <version>${allure.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
+        <!-- AspectJ Weaver for @Step annotations to work -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
@@ -168,18 +179,7 @@
             <artifactId>monte-screen-recorder</artifactId>
             <version>${monteScreenRecorder}</version>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-plugin-api -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-plugin-api</artifactId>
-            <version>${allureApi.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.assertthat</groupId>
@@ -203,7 +203,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>${allure.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -270,6 +270,10 @@
             <artifactId>mockito-core</artifactId>
             <version>5.17.0</version> <!-- Use the latest stable version -->
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
         </dependency>
 
     </dependencies>

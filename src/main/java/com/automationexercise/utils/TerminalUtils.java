@@ -7,9 +7,7 @@ public class TerminalUtils {
 
     public static void executeTerminalCommand(String... commandParts) {
         try {
-            ProcessBuilder builder = new ProcessBuilder(commandParts);
-            builder.inheritIO(); // Optional: inherit IO for logging output directly
-            Process process = builder.start();
+            Process process = Runtime.getRuntime().exec(commandParts);
             int exitCode = process.waitFor();
             if (exitCode != 0) {
                 LogUtils.error("Command failed with exit code: " + exitCode);

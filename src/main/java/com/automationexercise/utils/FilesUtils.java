@@ -113,7 +113,7 @@ public class FilesUtils {
     }
 
     public static void deleteSpecificFiles(String dirPath, String... excludedFileNames) {
-        Path directory = Paths.get(dirPath);
+        Path directory = Paths.get(dirPath).toAbsolutePath();
 
         if (!Files.exists(directory)) {
             LogUtils.warn("Directory does not exist: " + dirPath);
