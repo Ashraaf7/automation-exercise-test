@@ -44,7 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: allure-history
+          name: allure-history-linux
           path: ./test-outputs/allure-results/history
 
       - name: Run Tests
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: allure-history
+          name: allure-history-linux
           path: ./test-outputs/full-report/history
 
 
@@ -91,7 +91,7 @@ jobs:
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: allure-history
+          name: allure-history-windows
           path: ./test-outputs/allure-results/history
 
       - name: Run Tests
@@ -102,7 +102,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: allure-history
+          name: allure-history-windows
           path: ./test-outputs/full-report/history
 
       - name: Upload Allure Report as Artifact
