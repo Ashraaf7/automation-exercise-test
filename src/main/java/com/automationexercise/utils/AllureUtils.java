@@ -262,12 +262,14 @@ public class AllureUtils {
 
     //TODO: Attach the Records to Allure
     public static void attachRecordsToAllure() {
-        try {
-            File screenRecord = FilesUtils.getLatestFile(ScreenRecorderUtils.RECORDINGS_PATH);
-            if (screenRecord != null && screenRecord.getName().contains(".mp4"))
-                Allure.addAttachment("Test Execution Video", "video/mp4", java.nio.file.Files.newInputStream(screenRecord.toPath()), ".mp4");
-        } catch (Exception e) {
-            LogUtils.error(e.getMessage());
+        if (getConfigValue("recordTests").equalsIgnoreCase("true")) {
+            try {
+                File screenRecord = FilesUtils.getLatestFile(ScreenRecorderUtils.RECORDINGS_PATH);
+                if (screenRecord != null && screenRecord.getName().contains(".mp4"))
+                    Allure.addAttachment("Test Execution Video", "video/mp4", java.nio.file.Files.newInputStream(screenRecord.toPath()), ".mp4");
+            } catch (Exception e) {
+                LogUtils.error(e.getMessage());
+            }
         }
     }
 

@@ -49,7 +49,7 @@ jobs:
 
       - name: Run Tests
         continue-on-error: true
-        run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
+        run: mvn -DbrowserType="Chrome" -DrecordTests="false" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
 
       - name: Update Allure History on history-linux
         continue-on-error: true
@@ -103,7 +103,7 @@ jobs:
 
       - name: Run Tests
         continue-on-error: true
-        run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
+        run: mvn -DbrowserType="Edge" -DrecordTests="false" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
 
       - name: Update Allure History on history-windows
         continue-on-error: true

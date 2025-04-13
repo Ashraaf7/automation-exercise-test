@@ -21,23 +21,26 @@ public class ScreenRecorderUtils {
      * Starts screen recording.
      */
     public static void startRecording() {
-        try {
-            // Ensure the recordings directory exists
-            File recordingsDir = new File(RECORDINGS_PATH);
-            if (!recordingsDir.exists()) {
-                recordingsDir.mkdirs();
-            }
-            if (ConfigUtils.getConfigValue("executionType").equalsIgnoreCase("local")) {
-                // Configure the recorder to use the custom directory and file name
-                recorder.set(RecorderFactory.getRecorder(VideoRecorder.conf().recorderType()));
-                // Start recording
-                recorder.get().start();
-                LogUtils.info("Recording Started");
-            }
+        if (ConfigUtils.getConfigValue("recordTests").equalsIgnoreCase("true")) {
+            try {
+                // Ensure the recordings directory exists
+                File recordingsDir = new File(RECORDINGS_PATH);
+                if (!recordingsDir.exists()) {
+                    recordingsDir.mkdirs();
+                }
+                if (ConfigUtils.getConfigValue("executionType").equalsIgnoreCase("local")) {
+                    // Configure the recorder to use the custom directory and file name
+                    recorder.set(RecorderFactory.getRecorder(VideoRecorder.conf().recorderType()));
+                    // Start recording
+                    recorder.get().start();
+                    LogUtils.info("Recording Started");
+                }
 
-        } catch (Exception e) {
-            LogUtils.error("Failed to start recording: " + e.getMessage());
+            } catch (Exception e) {
+                LogUtils.error("Failed to start recording: " + e.getMessage());
+            }
         }
+        
     }
 
     /**
