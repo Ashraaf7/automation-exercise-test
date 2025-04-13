@@ -47,7 +47,7 @@ jobs:
           git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
           mkdir -p ./test-outputs/allure-results/
-          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
+          cp -r gh-pages/Linux/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
         continue-on-error: true
@@ -60,20 +60,20 @@ jobs:
           git config --global user.name "ashraf"
 
           # Remove existing history if it exists (to avoid overwrite error)
-          if (Test-Path "./gh-pages/history") {
-            Remove-Item -Recurse -Force "./gh-pages/history"
+          if (Test-Path "./gh-pages/Linux/history") {
+            Remove-Item -Recurse -Force "./gh-pages/Linux/history"
           }
 
           # Now safely copy the new history
-          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/"
+          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/Linux/"
 
           cd gh-pages
-          git add history
+          git add Linux/history
           git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
         shell: pwsh
-      
+
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
@@ -110,7 +110,7 @@ jobs:
           git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
           mkdir -p ./test-outputs/allure-results/
-          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
+          cp -r gh-pages/windows/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
         continue-on-error: true
@@ -123,15 +123,15 @@ jobs:
           git config --global user.name "ashraf"
 
           # Remove existing history if it exists (to avoid overwrite error)
-          if (Test-Path "./gh-pages/history") {
-            Remove-Item -Recurse -Force "./gh-pages/history"
+          if (Test-Path "./gh-pages/windows/history") {
+            Remove-Item -Recurse -Force "./gh-pages/windows/history"
           }
 
           # Now safely copy the new history
-          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/"
+          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/windows/"
 
           cd gh-pages
-          git add history
+          git add windows/history
           git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
