@@ -46,6 +46,7 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+          mkdir -p ./test-outputs/allure-results/
           cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
@@ -96,6 +97,7 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+          mkdir -p ./test-outputs/allure-results/
           cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
