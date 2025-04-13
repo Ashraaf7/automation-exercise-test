@@ -58,12 +58,22 @@ jobs:
         run: |
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "ashraf"
-          cp -r ./test-outputs/full-report/history ./gh-pages/
+
+          # Remove existing history if it exists (to avoid overwrite error)
+          if (Test-Path "./gh-pages/history") {
+            Remove-Item -Recurse -Force "./gh-pages/history"
+          }
+
+          # Now safely copy the new history
+          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/"
+
           cd gh-pages
           git add history
           git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
+        shell: pwsh
+      
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
@@ -111,12 +121,22 @@ jobs:
         run: |
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "ashraf"
-          cp -r ./test-outputs/full-report/history ./gh-pages/
+
+          # Remove existing history if it exists (to avoid overwrite error)
+          if (Test-Path "./gh-pages/history") {
+            Remove-Item -Recurse -Force "./gh-pages/history"
+          }
+
+          # Now safely copy the new history
+          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/"
+
           cd gh-pages
           git add history
           git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
+        shell: pwsh
+
 
 
       - name: Upload Allure Report as Artifact
