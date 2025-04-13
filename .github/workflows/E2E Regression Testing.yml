@@ -40,10 +40,21 @@ jobs:
       - name: Set permissions for github.workspace
         run: sudo chmod -R 777 $GITHUB_WORKSPACE
 
+      - name: Download Allure History
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: ./test-outputs/allure-results/history
+
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*" clean test
 
+      - name: Upload Allure History
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: ./test-outputs/reports/history
 
 
       - name: Upload Allure Report as Artifact
@@ -74,10 +85,22 @@ jobs:
         with:
           maven-version: 3.9.6
 
+      - name: Download Allure History
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: ./test-outputs/allure-results/history
+
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*"  clean test
 
+      - name: Upload Allure History
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: ./test-outputs/reports/history
+          
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
         with:
