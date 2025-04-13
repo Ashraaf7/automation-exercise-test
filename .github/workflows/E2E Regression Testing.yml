@@ -43,7 +43,7 @@ jobs:
       - name: Download Allure History from gh-pages
         run: |
           git config --global user.email "ahmedashraaf09@gmail.com"
-          git config --global user.name "ashraf"
+          git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
           cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
 
@@ -91,7 +91,7 @@ jobs:
       - name: Download Allure History from gh-pages
         run: |
           git config --global user.email "ahmedashraaf09@gmail.com"
-          git config --global user.name "ashraf"
+          git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
           cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
 
