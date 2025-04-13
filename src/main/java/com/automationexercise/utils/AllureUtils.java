@@ -236,7 +236,7 @@ public class AllureUtils {
     public static void attachLogsToAllure() {
         try {
             LogManager.shutdown(); // Flush and close appenders
-            FileUtils.waitFor(Objects.requireNonNull(FilesUtils.getLatestFile(LogUtils.LOGS_PATH)), 1);
+            FilesUtils.getLogFileAfterTest(FilesUtils.getLatestFile(LogUtils.LOGS_PATH));
             File logFile = FilesUtils.getLatestFile(LogUtils.LOGS_PATH);
             ((LoggerContext) LogManager.getContext(false)).reconfigure();
             // Check if the log file exists and is not null

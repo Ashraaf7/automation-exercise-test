@@ -11,6 +11,8 @@ import java.util.*;
 import static org.apache.commons.io.FileUtils.copyFile;
 
 public class FilesUtils {
+    static boolean isFirstTest = true;
+
     private FilesUtils() {
         super();
     }
@@ -44,7 +46,6 @@ public class FilesUtils {
         Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
         return files[0];
     }
-
 
     public static void deleteFiles(File dirPath) {
         if (dirPath == null || !dirPath.exists()) {
@@ -142,6 +143,14 @@ public class FilesUtils {
         }
     }
 
+    public static void getLogFileAfterTest(File logFile) {
+        if (isFirstTest) {
+            LogUtils.info("Waiting for log file to be created: " + logFile.getAbsolutePath());
+            FileUtils.waitFor(logFile, 2);
+            isFirstTest = false;
+        }
+
+    }
 
     /**
      * Copies a file from sourceFilePath to destinationFilePath on the local storage
