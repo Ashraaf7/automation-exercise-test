@@ -94,7 +94,7 @@ public class FilesUtils {
     //creating dirs if not exist
     public static void createDirs(String path) {
         try {
-            File file = new File(path);
+            File file = new File(ConfigUtils.getConfigValue("user.dir") + File.separator + path);
             if (!file.exists()) {
                 file.mkdirs();
                 LogUtils.info("Directory created: " + path);
@@ -110,7 +110,6 @@ public class FilesUtils {
             FileUtils.deleteQuietly(file);
         } catch (Exception exception) {
             LogUtils.error(exception.getMessage());
-
         }
     }
 

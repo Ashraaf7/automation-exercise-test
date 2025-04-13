@@ -71,7 +71,7 @@ public class AllureUtils {
                         .put("URL", getConfigValue("baseUrlWeb"))
                         .build(), getConfigValue("user.dir")
                         + File.separator + ALLURE_RESULTS_FOLDER_PATH + File.separator);
-        LogUtils.info(String.valueOf(new File(getConfigValue("user.dir") + File.separator + ALLURE_RESULTS_FOLDER_PATH + File.separator + "environment.xml").exists()));
+        LogUtils.info(getConfigValue("user.dir"));
         downloadAndExtractAllureBinaries();
     }
 
