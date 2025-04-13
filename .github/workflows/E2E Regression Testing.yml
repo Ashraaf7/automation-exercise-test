@@ -57,7 +57,7 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
 
-          cp -r test-outputs/full-report/history history-linux/history || echo "No new history to copy"
+          cp -r test-outputs/full-report/history history-linux/ || echo "No new history to copy"
 
 
 
@@ -99,7 +99,7 @@ jobs:
           git config --global user.name "Ashraaf7"
           git clone --depth=1 --branch history-windows https://github.com/${{ github.repository }}.git history-windows
           mkdir -p ./test-outputs/allure-results/
-          cp -r history-windows/history ./test-outputs/allure-results/history || echo "No history yet"
+          cp -r history-windows/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
         continue-on-error: true
@@ -111,7 +111,7 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
 
-          Copy-Item -Recurse -Force "test-outputs/full-report/history" "history-windows/history" -ErrorAction SilentlyContinue
+          Copy-Item -Recurse -Force "test-outputs/full-report/history" "history-windows/" -ErrorAction SilentlyContinue
 
 
           cd history-windows
