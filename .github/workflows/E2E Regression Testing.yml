@@ -61,9 +61,9 @@ jobs:
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
           git add history
-          git commit -m "Update history from CI run [skip ci]"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
-
+          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin gh-pages
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
@@ -114,8 +114,9 @@ jobs:
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
           git add history
-          git commit -m "Update history from CI run [skip ci]"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
+          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin gh-pages
 
 
       - name: Upload Allure Report as Artifact
