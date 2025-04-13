@@ -143,10 +143,10 @@ public class FilesUtils {
         }
     }
 
-    public static void getLogFileAfterTest(File logFile) {
+    public static void getLogFileAfterTest(String logFile) {
         if (isFirstTest) {
-            LogUtils.info("Waiting for log file to be created: " + logFile.getAbsolutePath());
-            FileUtils.waitFor(logFile, 2);
+            LogUtils.info("Waiting for log file to be created");
+            FileUtils.waitFor(new File(logFile), 2);
             isFirstTest = false;
         }
 
