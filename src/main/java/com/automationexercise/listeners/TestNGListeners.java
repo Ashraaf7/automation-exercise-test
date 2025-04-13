@@ -6,7 +6,6 @@ import org.testng.*;
 
 import java.io.File;
 
-import static com.automationexercise.utils.AllureUtils.FULL_ALLURE_REPORT_PATH;
 import static com.automationexercise.utils.AllureUtils.copyHistory;
 import static com.automationexercise.utils.PropertiesUtils.loadProperties;
 
@@ -23,14 +22,12 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         LogUtils.info("Test Execution started");
 
 
-        cleanTestOutputDirectories();
         createTestOutputDirectories();
-        LogUtils.info("Directories cleaned and created");
+        LogUtils.info("Directories created");
+
         loadProperties();
         LogUtils.info("Properties loaded");
 
-        copyHistory();
-        LogUtils.info("History copied");
 
         AllureUtils.setAllureEnvironment();
         LogUtils.info("Allure environment set");
@@ -41,11 +38,9 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
         if ("true".equalsIgnoreCase(cleanHistory)) {
             FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
-            FilesUtils.cleanDirectory(new File(FULL_ALLURE_REPORT_PATH));
         }
         FilesUtils.cleanDirectory(screenshots);
-        FilesUtils.cleanDirectory(reports);
-        FilesUtils.deleteSpecificFiles(FULL_ALLURE_REPORT_PATH, "history");
+        //FilesUtils.cleanDirectory(reports);
         FilesUtils.cleanDirectory(logs);
         FilesUtils.cleanDirectory(recordings);
     }
@@ -61,10 +56,13 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     @Override
     public void onExecutionFinish() {
         LogUtils.info("Test Execution Finished");
+        copyHistory();
+        LogUtils.info("History copied");
         AllureUtils.generateAllureReport();
         AllureUtils.generateFullAllureReport();
         String newFileName = AllureUtils.renameAllureReport();
         AllureUtils.openAllureReport(newFileName);
+        cleanTestOutputDirectories();
     }
 
     @Override
