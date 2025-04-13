@@ -6,7 +6,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 public class SignupPage extends NavigationBarPage {
-    private final By enterAccountInformation = By.cssSelector(".login-form > h2");
+    private final By enterAccountInformation = By.xpath("(//b)[1]");
     private final By titleMale = By.id("id_gender1");
     private final By titleFemale = By.id("id_gender2");
     private final By password = By.id("password");

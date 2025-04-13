@@ -64,7 +64,7 @@ public abstract class BaseAssertions {
     @Step("Verify element is visible: {by}")
     public void validateElementVisible(By by) {
         wait.waitForElementVisible(by);
-        assertTrue(driver.findElement(by).isDisplayed(), "The element is not visible");
+        assertTrue(elementActions.findElement(by).isDisplayed(), "The element is not visible");
     }
 
     @Step("Verify page title: {pageTitle}")

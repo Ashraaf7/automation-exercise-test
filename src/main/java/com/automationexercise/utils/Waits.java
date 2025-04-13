@@ -31,12 +31,12 @@ public class Waits {
 
     // Wait for element to be visible (re-find the element each time to avoid staleness)
     public void waitForElementVisible(By locator) {
-        wait.until(driver -> driver.findElement(locator).isDisplayed());
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     // Wait for element to be clickable (re-find each time to avoid staleness)
     public void waitForElementClickable(By locator) {
-        wait.until(driver -> (driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled()));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
 
