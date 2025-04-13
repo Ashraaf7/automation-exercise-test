@@ -65,11 +65,11 @@ jobs:
           }
 
           # Now safely copy the new history
-          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/Linux/"
+          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/Linux/history"
 
           cd gh-pages
-          git add Linux/history
-          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
+          git add Linux/
+          git commit -m "Update Linux history from CI run [skip ci]" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
         shell: pwsh
@@ -128,11 +128,11 @@ jobs:
           }
 
           # Now safely copy the new history
-          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/windows/"
+          Copy-Item -Recurse -Force "./test-outputs/full-report/history" "./gh-pages/windows/history"
 
           cd gh-pages
-          git add windows/history
-          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
+          git add windows/
+          git commit -m "Update win history from CI run [skip ci]" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin gh-pages
         shell: pwsh
