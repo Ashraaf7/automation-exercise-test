@@ -35,7 +35,7 @@ public class FilesUtils {
 
     public static File getLatestFile(String folderPath) {
         File folder = new File(folderPath);
-        File[] files = folder.listFiles((dir, name) -> name.startsWith("log_")); // Only consider files starting with 'log_'
+        File[] files = folder.listFiles();
         if (files == null || files.length == 0) {
             LogUtils.warn("No files found in the directory: " + folderPath);
             return null;

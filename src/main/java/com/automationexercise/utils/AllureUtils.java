@@ -3,12 +3,13 @@ package com.automationexercise.utils;
 import com.google.common.collect.ImmutableMap;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.jsoup.Jsoup;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -234,10 +235,9 @@ public class AllureUtils {
     //TODO: Attach the Logs to Allure
     public static void attachLogsToAllure() {
         try {
-            // Get the latest log file
-            Path logPath = Paths.get(LogUtils.LOGS_PATH);
-            LogUtils.info("Log Path: " + logPath.toAbsolutePath());
-            File logFile = FilesUtils.getLatestFile(logPath.toAbsolutePath().toString());
+            org.apache.logging.log4j.LogManager.shutdown(); // Flush and close appenders
+            File logFile = FilesUtils.getLatestFile(LogUtils.LOGS_PATH);
+            ((LoggerContext) LogManager.getContext(false)).reconfigure();
             // Check if the log file exists and is not null
             if (logFile == null || !logFile.exists()) {
                 LogUtils.error("Log file not found or does not exist.");
