@@ -118,7 +118,7 @@ public class FilesUtils {
         Path directory = Paths.get(dirPath).toAbsolutePath();
 
         if (!Files.exists(directory)) {
-            LogUtils.warn("Directory does not exist: " + dirPath);
+            LogUtils.warn("Directory does not exist: " + directory);
             return;
         }
 

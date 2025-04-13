@@ -21,8 +21,7 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     @Override
     public void onExecutionStart() {
         LogUtils.info("Test Execution started");
-        copyHistory();
-        LogUtils.info("History copied");
+
 
         cleanTestOutputDirectories();
         createTestOutputDirectories();
@@ -30,6 +29,8 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         loadProperties();
         LogUtils.info("Properties loaded");
 
+        copyHistory();
+        LogUtils.info("History copied");
 
         AllureUtils.setAllureEnvironment();
         LogUtils.info("Allure environment set");
@@ -40,10 +41,11 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
         if ("true".equalsIgnoreCase(cleanHistory)) {
             FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
+            FilesUtils.cleanDirectory(new File(FULL_ALLURE_REPORT_PATH));
         }
         FilesUtils.cleanDirectory(screenshots);
         FilesUtils.cleanDirectory(reports);
-        FilesUtils.cleanDirectory(new File(FULL_ALLURE_REPORT_PATH));
+        FilesUtils.deleteSpecificFiles(FULL_ALLURE_REPORT_PATH, "history");
         FilesUtils.cleanDirectory(logs);
         FilesUtils.cleanDirectory(recordings);
     }
