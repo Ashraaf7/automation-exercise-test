@@ -41,6 +41,7 @@ jobs:
         run: sudo chmod -R 777 $GITHUB_WORKSPACE
 
       - name: Download Allure History from gh-pages
+        continue-on-error: true
         run: |
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
@@ -52,6 +53,7 @@ jobs:
         run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*" clean test
 
       - name: Upload Allure History to gh-pages
+        continue-on-error: true
         run: |
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
@@ -89,6 +91,7 @@ jobs:
           maven-version: 3.9.6
 
       - name: Download Allure History from gh-pages
+        continue-on-error: true
         run: |
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
@@ -100,6 +103,7 @@ jobs:
         run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*"  clean test
 
       - name: Upload Allure History to gh-pages
+        continue-on-error: true
         run: |
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
