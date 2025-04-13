@@ -58,14 +58,11 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "ashraf"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
-          mkdir -p ./test-outputs/allure-results/
-          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
           git add history
           git commit -m "Update history from CI run [skip ci]"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
-
 
 
       - name: Upload Allure Report as Artifact
@@ -114,14 +111,12 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "ashraf"
           git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
-          mkdir -p ./test-outputs/allure-results/
-          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
           git add history
           git commit -m "Update history from CI run [skip ci]"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
-      
+
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
