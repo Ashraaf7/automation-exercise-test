@@ -130,7 +130,6 @@ public class FilesUtils {
                 if (!excludedFiles.contains(fileName)) {
                     try {
                         FileUtils.forceDelete(file.toFile());
-                        LogUtils.info("File deleted: " + fileName);
                     } catch (IOException ex) {
                         LogUtils.error("Failed to delete file: " + fileName + " due to: " + ex.getMessage());
                     }

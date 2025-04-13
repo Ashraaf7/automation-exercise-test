@@ -16,13 +16,14 @@ import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static com.automationexercise.utils.ConfigUtils.getConfigValue;
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 public class AllureUtils {
     public static final String ALLURE_REPORT_PATH = "test-outputs/reports";
     public static final String FULL_ALLURE_REPORT_PATH = "test-outputs/full-report";
     public static final String ALLURE_RESULTS_FOLDER_PATH = "test-outputs/allure-results";
-    private static final String USER_HOME = ConfigUtils.getConfigValue("user.home");
+    private static final String USER_HOME = getConfigValue("user.home");
     private static final String ALLURE_EXTRACTION_LOCATION = USER_HOME + File.separator + ".m2" + File.separator + "repository" + File.separator + "allure" + File.separator;
     private static String ALLURE_VERSION = "";
     private static String ALLURE_BINARY_PATH = "";
@@ -63,13 +64,14 @@ public class AllureUtils {
         LogUtils.info("Initializing Allure Reporting Environment...");
         allureEnvironmentWriter(
                 ImmutableMap.<String, String>builder()
-                        .put("OS", ConfigUtils.getConfigValue("os.name"))
-                        .put("Java  version:", ConfigUtils.getConfigValue("java.runtime.version"))
-                        .put("Browser", ConfigUtils.getConfigValue("browserType"))
-                        .put("Execution Type", ConfigUtils.getConfigValue("executionType"))
-                        .put("URL", ConfigUtils.getConfigValue("baseUrlWeb"))
-                        .build(), ConfigUtils.getConfigValue("user.dir")
-                        + "\\" + ALLURE_RESULTS_FOLDER_PATH + "\\");
+                        .put("OS", getConfigValue("os.name"))
+                        .put("Java  version:", getConfigValue("java.runtime.version"))
+                        .put("Browser", getConfigValue("browserType"))
+                        .put("Execution Type", getConfigValue("executionType"))
+                        .put("URL", getConfigValue("baseUrlWeb"))
+                        .build(), getConfigValue("user.dir")
+                        + File.separator + ALLURE_RESULTS_FOLDER_PATH + File.separator);
+        LogUtils.info(String.valueOf(new File(getConfigValue("user.dir") + File.separator + ALLURE_RESULTS_FOLDER_PATH + File.separator + "environment.xml").exists()));
         downloadAndExtractAllureBinaries();
     }
 
@@ -86,7 +88,7 @@ public class AllureUtils {
             extractAllureBinaries(allureZipPath);
             LogUtils.info("Allure binaries downloaded and extracted.");
 
-            if (!ConfigUtils.getConfigValue("os.name").toLowerCase().contains("win")) {
+            if (!getConfigValue("os.name").toLowerCase().contains("win")) {
                 setUnixExecutePermissions();
             }
         } catch (Exception e) {
@@ -191,7 +193,7 @@ public class AllureUtils {
     }
 
     public static void openAllureReport(String newFileName) {
-        if (!ConfigUtils.getConfigValue("OpenAllureReportAfterExecution").equalsIgnoreCase("true")) {
+        if (!getConfigValue("OpenAllureReportAfterExecution").equalsIgnoreCase("true")) {
             return;
         }
 
