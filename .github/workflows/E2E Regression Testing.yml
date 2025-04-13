@@ -57,8 +57,9 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
 
-          rm -rf gh-pages-linux/history
-          cp -r ./test-outputs/full-report/history ./gh-pages-linux/history
+          cp -r test-outputs/full-report/history gh-pages-linux/history || echo "No new history to copy"
+
+
 
           cd gh-pages-linux
           git add .
@@ -110,8 +111,8 @@ jobs:
           git config --global user.email "ahmedashraaf09@gmail.com"
           git config --global user.name "Ashraaf7"
 
-          rm -rf gh-pages-windows/history
-          cp -r ./test-outputs/full-report/history ./gh-pages-windows/history
+          Copy-Item -Recurse -Force "test-outputs/full-report/history" "gh-pages-windows/history" -ErrorAction SilentlyContinue
+
 
           cd gh-pages-windows
           git add .
