@@ -143,12 +143,30 @@ public class FilesUtils {
 
     public static void getLogFileAfterTest(String logFile) {
         if (isFirstTest) {
-            LogUtils.info("Waiting for log file to be created");
-            FileUtils.waitFor(new File(logFile), 2);
+            try {
+                // Wait until the file is created
+                File file = new File(logFile);
+                while (!file.exists() || !file.isFile()) {
+                    file = new File(logFile); // Check again
+                }
+
+                LogUtils.info("Log file created: " + logFile);
+            } catch (Exception e) {
+                LogUtils.error("An unexpected error occurred: " + e.getMessage());
+            }
+
             isFirstTest = false;
         }
-
     }
+
+    public static void forceDelete(File logs) {
+        try {
+            FileUtils.forceDeleteOnExit(logs);
+        } catch (IOException e) {
+            LogUtils.error("Failed to delete file: " + logs.getAbsolutePath() + " due to: " + e.getMessage());
+        }
+    }
+
 
     /**
      * Copies a file from sourceFilePath to destinationFilePath on the local storage

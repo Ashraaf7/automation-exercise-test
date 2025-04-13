@@ -41,8 +41,8 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         }
         FilesUtils.cleanDirectory(screenshots);
         //FilesUtils.cleanDirectory(reports);
-        FilesUtils.cleanDirectory(logs);
         FilesUtils.cleanDirectory(recordings);
+        FilesUtils.forceDelete(logs);
     }
 
     private void createTestOutputDirectories() {
