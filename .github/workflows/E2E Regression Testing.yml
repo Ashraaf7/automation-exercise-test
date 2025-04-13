@@ -53,14 +53,19 @@ jobs:
         continue-on-error: true
         run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*" clean test
 
-      - name: Upload Allure History to gh-pages
-        continue-on-error: true
+      - name: Update Allure History on gh-pages
         run: |
+          git config --global user.email "ahmedashraaf09@gmail.com"
+          git config --global user.name "ashraf"
+          git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+          mkdir -p ./test-outputs/allure-results/
+          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
-          git add .
-          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
-          git push origin gh-pages
+          git add history
+          git commit -m "Update history from CI run [skip ci]"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
+
 
 
       - name: Upload Allure Report as Artifact
@@ -104,14 +109,19 @@ jobs:
         continue-on-error: true
         run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*"  clean test
 
-      - name: Upload Allure History to gh-pages
-        continue-on-error: true
+      - name: Update Allure History on gh-pages
         run: |
+          git config --global user.email "ahmedashraaf09@gmail.com"
+          git config --global user.name "ashraf"
+          git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+          mkdir -p ./test-outputs/allure-results/
+          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
           cp -r ./test-outputs/full-report/history ./gh-pages/
           cd gh-pages
-          git add .
-          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
-          git push origin gh-pages
+          git add history
+          git commit -m "Update history from CI run [skip ci]"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
+      
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
