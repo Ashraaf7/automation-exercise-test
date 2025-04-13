@@ -40,23 +40,24 @@ jobs:
       - name: Set permissions for github.workspace
         run: sudo chmod -R 777 $GITHUB_WORKSPACE
 
-      - name: Download Allure History
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          name: allure-history-linux
-          path: ./test-outputs/allure-results/history
+      - name: Download Allure History from gh-pages
+        run: |
+          git config --global user.email "ahmedashraaf09@gmail.com"
+          git config --global user.name "ashraf"
+          git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Chrome" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*" clean test
 
-      - name: Upload Allure History
-        uses: actions/upload-artifact@v4
-        continue-on-error: true
-        with:
-          name: allure-history-linux
-          path: ./test-outputs/full-report/history
+      - name: Upload Allure History to gh-pages
+        run: |
+          cp -r ./test-outputs/full-report/history ./gh-pages/
+          cd gh-pages
+          git add .
+          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
+          git push origin gh-pages
 
 
       - name: Upload Allure Report as Artifact
@@ -87,23 +88,24 @@ jobs:
         with:
           maven-version: 3.9.6
 
-      - name: Download Allure History
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          name: allure-history-windows
-          path: ./test-outputs/allure-results/history
+      - name: Download Allure History from gh-pages
+        run: |
+          git config --global user.email "ahmedashraaf09@gmail.com"
+          git config --global user.name "ashraf"
+          git clone --depth=1 --branch gh-pages https://github.com/${{ github.repository }}.git gh-pages
+          cp -r gh-pages/history ./test-outputs/allure-results/ || echo "No history yet"
 
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Edge" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="com.automationexercise.tests.TC*"  clean test
 
-      - name: Upload Allure History
-        uses: actions/upload-artifact@v4
-        continue-on-error: true
-        with:
-          name: allure-history-windows
-          path: ./test-outputs/full-report/history
+      - name: Upload Allure History to gh-pages
+        run: |
+          cp -r ./test-outputs/full-report/history ./gh-pages/
+          cd gh-pages
+          git add .
+          git commit -m "Update history from CI run [skip ci]" || echo "No changes to commit"
+          git push origin gh-pages
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
