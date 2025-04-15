@@ -78,7 +78,7 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     public void afterInvocation(IInvokedMethod method, ITestResult result) {
         if (method.isTestMethod()) {
             ScreenRecorderUtils.stopRecording(result.getName());
-            SoftAssertions.assertAll(result);
+            SoftAssertions.AssertIfUsed();
             // For Test Methods: Log and Take Screenshot
             switch (result.getStatus()) {
                 case ITestResult.SUCCESS -> ScreenshotUtils.takeScreenShot("passed-" + result.getName());

@@ -5,29 +5,34 @@ import com.automationexercise.utils.LogUtils;
 import com.automationexercise.utils.Waits;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestResult;
 import org.testng.asserts.SoftAssert;
 
 public class SoftAssertions extends BaseAssertions {
+    private static boolean used = false; // Flag to track usage
     private static SoftAssert softAssert = new SoftAssert();
 
     public SoftAssertions(ElementActions elementActions, Waits wait, WebDriver driver) {
         super(elementActions, wait, driver);
     }
 
+    public static void AssertIfUsed() {
+        if (!used) return;
+        assertAll();
+    }
+
+
     @Step("Assert all soft assertions")
-    public static void assertAll(ITestResult result) {
+    private static void assertAll() {
         try {
             softAssert.assertAll();
         } catch (AssertionError e) {
-            // Handle the assertion failure
-            LogUtils.error("Assertion failed: " + e.getMessage());
-            result.setStatus(ITestResult.FAILURE);
-            result.setThrowable(e);
+            LogUtils.error("Assertion failed:", e.getMessage());
+            throw e;
         } finally {
             resetSoftAssert();
         }
     }
+
 
     private static void resetSoftAssert() {
         softAssert = new SoftAssert();
@@ -35,16 +40,19 @@ public class SoftAssertions extends BaseAssertions {
 
     @Override
     protected void assertTrue(boolean condition, String message) {
+        used = true;
         softAssert.assertTrue(condition, message);
     }
 
     @Override
     protected void assertFalse(boolean condition, String message) {
+        used = true;
         softAssert.assertFalse(condition, message);
     }
 
     @Override
     protected void assertEquals(String actual, String expected, String message) {
+        used = true;
         softAssert.assertEquals(actual, expected, message);
     }
 
