@@ -1,5 +1,6 @@
 package com.automationexercise.utils;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -11,6 +12,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
+
+import static com.automationexercise.utils.AllureUtils.addStepParameters;
 
 
 public class ElementActions {
@@ -67,11 +70,16 @@ public class ElementActions {
 
     //TODO: Clicking on element after checking clickability
     public void click(By locator) {
+        String elementName = findElement(locator).getAccessibleName();
+        addStepParameters(new String[][]{
+                {"element", elementName}
+        });
         scrollToElementAtTop(locator);
         waits.waitForElementClickable(locator);
         findElement(locator).click();
-        LogUtils.info("Click on element " + locator);
+        LogUtils.info("Click on element", elementName);
     }
+
 
     /**
      * Upload files by dragging the link directly into the input box
@@ -80,25 +88,45 @@ public class ElementActions {
      * @param filePath absolute path to the file
      */
     public void uploadFile(By by, String filePath) {
+        String elementName = findElement(by).getAccessibleName();
         String fileAbsluted = System.getProperty("user.dir") + File.separator + filePath;
-        type(by, fileAbsluted);
-        LogUtils.info("Upload File successfully: " + fileAbsluted);
+        Allure.step("Upload file in " + elementName, () -> {
+            addStepParameters(new String[][]{
+                    {"element", elementName},
+                    {"File Path", filePath}
+            });
+            waits.waitForElementVisible(by);
+            findElement(by).sendKeys(fileAbsluted);
+            LogUtils.info("Upload File successfully:", fileAbsluted, "in", elementName);
+        });
+
+
     }
 
     //TODO: Send data to element after checking visibility
     public void type(By locator, String data) {
-        scrollToElementAtTop(locator);
-        waits.waitForElementVisible(locator);
-        findElement(locator).sendKeys(data);
-        LogUtils.info("Type " + data + " in element " + locator);
+        String elementName = findElement(locator).getAccessibleName();
+        Allure.step("Type " + data + " in " + elementName, () -> {
+            AllureUtils.addStepParameters(new String[][]{
+                    {"element", elementName}
+                    , {"data", data}
+            });
+            scrollToElementAtTop(locator);
+            waits.waitForElementVisible(locator);
+            findElement(locator).sendKeys(data);
+            LogUtils.info("Type ", data, "in", findElement(locator).getAccessibleName());
+        });
+
     }
 
     //TODO: get text from element after checking visibility
+    @Step("Get text")
     public String getText(By locator) {
+        String elementName = findElement(locator).getAccessibleName();
         scrollToElementAtTop(locator);
         waits.waitForElementVisible(locator);
         String text = findElement(locator).getText();
-        LogUtils.info("Get text from element " + locator + ": " + text);
+        LogUtils.info("Get text from element", elementName, ":", text);
         return text;
     }
 
@@ -165,11 +193,10 @@ public class ElementActions {
      *
      * @param locator Represent a web element as the By object
      */
-    @Step("Scroll to element {0}")
+    @Step("Scroll")
     public void scrollToElementAtBottom(By locator) {
         waits.waitForElementPresent(locator);
         getJsExecutor().executeScript("arguments[0].scrollIntoView(false);", findElement(locator));
-        LogUtils.info("Scroll to element " + locator);
     }
 
     //TODO: Highlight element
@@ -177,8 +204,9 @@ public class ElementActions {
 
         // draw a border around the found element
         if (driver instanceof JavascriptExecutor) {
+            String elementName = findElement(locator).getAccessibleName();
             getJsExecutor().executeScript("arguments[0].style.border='3px solid red'", findElement(locator));
-            LogUtils.info("Highlight on element " + locator);
+            LogUtils.info("Highlight on element", elementName);
         }
         return findElement(locator);
     }
@@ -189,7 +217,7 @@ public class ElementActions {
      * @param fromElement represent the drag-able element
      * @param toElement   represent the drop-able element
      */
-    @Step("Drag and Drop from {0} to {1}")
+    @Step("Drag and Drop")
     public void dragAndDrop(By fromElement, By toElement) {
         try {
             scrollToElementAtTop(fromElement);
@@ -197,14 +225,14 @@ public class ElementActions {
             waits.waitForElementClickable(fromElement);
             waits.waitForElementClickable(toElement);
             action.dragAndDrop(findElement(fromElement), findElement(toElement)).perform();
-            LogUtils.info("Drag and Drop from " + fromElement + " to " + toElement);
+            LogUtils.info("Drag and Drop from ", findElement(fromElement).getAccessibleName(), "to", findElement(toElement).getAccessibleName());
         } catch (Exception e) {
             LogUtils.error("Drag and Drop failed because of: " + e.getMessage());
         }
     }
 
     //TODO: Function for getting selected option from drop down
-    @Step("Get selected option from drop down: {locator}")
+    @Step("Get selected option from drop down")
     public WebElement getSelectedOptionFromDropDown(By locator) {
         return new Select(findElement(locator)).getFirstSelectedOption();
     }
@@ -214,14 +242,13 @@ public class ElementActions {
      *
      * @param locator Represent a web element as the By object
      */
-    @Step("Scroll to element {0}")
     public void scrollToElementAtTop(By locator) {
         waits.waitForElementPresent(locator);
         getJsExecutor().executeScript("arguments[0].scrollIntoView(true);", findElement(locator));
     }
 
     //TODO:  Scroll to specific element
-    @Step("Scroll to element: {locator}")
+    @Step("Scroll")
     public void scrollToElement(By locator) {
         waits.waitForElementPresent(locator);
         getJsExecutor().executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", findElement(locator));

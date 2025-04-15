@@ -2,6 +2,7 @@ package com.automationexercise.utils;
 
 import com.google.common.collect.ImmutableMap;
 import io.qameta.allure.Allure;
+import io.qameta.allure.model.Parameter;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -11,6 +12,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -259,7 +261,6 @@ public class AllureUtils {
         }
     }
 
-
     //TODO: Attach the Records to Allure
     public static void attachRecordsToAllure() {
         if (getConfigValue("recordTests").equalsIgnoreCase("true")) {
@@ -271,6 +272,14 @@ public class AllureUtils {
                 LogUtils.error(e.getMessage());
             }
         }
+    }
+
+    public static void addStepParameters(String[][] nameValuePairs) {
+        List<Parameter> parameters = Arrays.stream(nameValuePairs)
+                .map(pair -> new Parameter().setName(pair[0]).setValue(pair[1]))
+                .toList();
+
+        Allure.getLifecycle().updateStep(step -> step.setParameters(parameters));
     }
 
     public enum OS {

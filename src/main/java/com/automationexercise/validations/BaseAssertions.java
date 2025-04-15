@@ -1,8 +1,10 @@
 package com.automationexercise.validations;
 
+import com.automationexercise.utils.AllureUtils;
 import com.automationexercise.utils.ElementActions;
 import com.automationexercise.utils.LogUtils;
 import com.automationexercise.utils.Waits;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +37,7 @@ public abstract class BaseAssertions {
         assertTrue(selectedOption.equals(text), "The option is not selected");
     }
 
-    @Step("Verify element is displayed")
+    @Step("Verify element is selected")
     public void validateElementChecked(By by) {
         boolean flag = elementActions.findElement(by).isSelected();
         assertTrue(flag, "The element is not checked");
@@ -61,10 +63,15 @@ public abstract class BaseAssertions {
         assertFalse(actualText.equals(expectedText), "The text is as expected");
     }
 
-    @Step("Verify element is visible: {by}")
     public void validateElementVisible(By by) {
-        wait.waitForElementVisible(by);
-        assertTrue(elementActions.findElement(by).isDisplayed(), "The element is not visible");
+        String elementName = elementActions.findElement(by).getAccessibleName();
+        Allure.step("Verify element " + elementName + " is visible ", () -> {
+            AllureUtils.addStepParameters(new String[][]{
+                    {"element", elementName}
+            });
+            wait.waitForElementVisible(by);
+            assertTrue(elementActions.findElement(by).isDisplayed(), "The element is not visible");
+        });
     }
 
     @Step("Verify page title: {pageTitle}")
