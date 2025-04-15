@@ -9,9 +9,9 @@ import org.testng.annotations.BeforeClass;
 
 public class BaseTest {
 
-    protected JsonUtils testData;
-    protected GUIDriver driver;
-    
+    public JsonUtils testData;
+    public GUIDriver driver;
+
 
     @BeforeClass
     public void beforeClass() {

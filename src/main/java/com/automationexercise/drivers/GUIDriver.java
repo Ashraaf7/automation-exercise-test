@@ -4,12 +4,16 @@ import com.automationexercise.utils.*;
 import com.automationexercise.validations.Assertions;
 import com.automationexercise.validations.SoftAssertions;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import static org.testng.Assert.fail;
 
 public class GUIDriver {
     //code
-    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+    private final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     String browserName = ConfigUtils.getConfigValue("browserType");
 
@@ -20,9 +24,50 @@ public class GUIDriver {
         setDriver(driver);
     }
 
-    public static WebDriver getInstance() {
-        return driverThreadLocal.get();
+    public static GUIDriver extractDriver(ITestResult result) {
+        Object testInstance = result.getInstance();
+        Class<?> clazz = testInstance.getClass();
+
+        while (clazz != null) {
+            Field[] fields = clazz.getDeclaredFields();
+
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+
+                    Object value;
+                    if (Modifier.isStatic(field.getModifiers())) {
+                        value = field.get(null);
+                    } else {
+                        value = field.get(testInstance);
+                    }
+
+                    // ThreadLocal<GUIDriver>
+                    if (value instanceof ThreadLocal<?> threadLocal) {
+                        Object driverObj = threadLocal.get();
+                        if (driverObj instanceof GUIDriver driver) {
+                            return driver;
+                        }
+                    }
+
+                    // Direct GUIDriver
+                    if (value instanceof GUIDriver driver) {
+                        return driver;
+                    }
+
+                } catch (IllegalAccessException e) {
+                    LogUtils.error("Unable to access field '", field.getName(), "'", e.getMessage());
+                }
+            }
+
+            // Go up to check parent class
+            clazz = clazz.getSuperclass();
+        }
+
+        LogUtils.warn("GUIDriver instance not found in test class: ", testInstance.getClass().getSimpleName());
+        return null;
     }
+
 
     public void quit() {
         if (get() != null) {

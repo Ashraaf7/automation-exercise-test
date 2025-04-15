@@ -228,7 +228,14 @@ public class AllureUtils {
     //TODO: Attach the screenshot to Allure
     public static void attachScreenshotToAllure(String screenshotName, String screenshotPath) {
         try {
+            // Check if the screenshot file exists
+            File screenshotFile = new File(screenshotPath);
+            if (!screenshotFile.exists()) {
+                LogUtils.error("Screenshot file not found: ", screenshotPath);
+                return;
+            }
             Allure.addAttachment(screenshotName, java.nio.file.Files.newInputStream(Path.of(screenshotPath)));
+            LogUtils.info("Screenshot attached to Allure report:", screenshotPath);
         } catch (Exception e) {
             LogUtils.error(e.getMessage());
         }

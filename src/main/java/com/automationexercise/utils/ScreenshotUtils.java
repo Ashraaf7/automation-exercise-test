@@ -15,7 +15,7 @@ import static com.automationexercise.utils.TimeUtils.getTimestamp;
 
 public class ScreenshotUtils {
     public final static String SCREENSHOTS_PATH = "test-outputs/screenshots/";
-    private final static ElementActions elementActions = new ElementActions(GUIDriver.getInstance());
+    private static ElementActions elementActions;
 
     private ScreenshotUtils() {
         super();
@@ -23,31 +23,33 @@ public class ScreenshotUtils {
 
 
     //TODO: Take general Screenshot
-    public static void takeScreenShot(String screenshotName) {
+    public static void takeScreenShot(GUIDriver driver, String screenshotName) {
         try {
             // Capture screenshot using TakesScreenshot
-            File screenshotSrc = ((TakesScreenshot) GUIDriver.getInstance()).getScreenshotAs(OutputType.FILE);
+            File screenshotSrc = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.FILE);
 
             // Save screenshot to a file if needed
 
             File screenshotFile = new File(SCREENSHOTS_PATH + screenshotName + "-" + getTimestamp() + ".png");
             FileUtils.copyFile(screenshotSrc, screenshotFile);
-
-            // Attach the screenshot to Allure
-            attachScreenshotToAllure(screenshotName, screenshotFile.getPath());
             LogUtils.info("Capturing Screenshot Succeeded");
+            // Attach the screenshot to Allure
+            Thread.sleep(4000);
+            attachScreenshotToAllure(screenshotName, screenshotFile.getPath());
+
         } catch (Exception e) {
-            LogUtils.error("Failed to Capture Screenshot " + e.getMessage());
+            LogUtils.error("Failed to Capture Screenshot ", e.getMessage());
         }
     }
 
     //TODO: Take general Screenshot
-    public static void takeHighlightedScreenShot(String screenshotName, By element) {
+    public static void takeHighlightedScreenShot(GUIDriver driver, String screenshotName, By element) {
         try {
             //Highlight element
+            elementActions = new ElementActions(driver.get());
             elementActions.highLightElement(element);
             // Capture screenshot using TakesScreenshot
-            File screenshotSrc = ((TakesScreenshot) GUIDriver.getInstance()).getScreenshotAs(OutputType.FILE);
+            File screenshotSrc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
             // Save screenshot to a file if needed
             File screenshotFile = new File(SCREENSHOTS_PATH + screenshotName + "-" + getTimestamp() + ".png");
@@ -64,9 +66,10 @@ public class ScreenshotUtils {
     }
 
     //TODO: Take Screenshot for specific element
-    public static void takeScreenShotForElement(By locator, String screenshotName) {
+    public static void takeScreenShotForElement(GUIDriver driver, By locator, String screenshotName) {
         try {
             // Capture screenshot using TakesScreenshot
+            elementActions = new ElementActions(driver.get());
             File screenshotSrc = elementActions.findElement(locator)
                     .getScreenshotAs(OutputType.FILE);
             // Save screenshot to a file if needed
@@ -84,9 +87,9 @@ public class ScreenshotUtils {
     }
 
     //TODO: take full screenshot without highlighting on element
-    public static void takeFullScreenshot() {
+    public static void takeFullScreenshot(GUIDriver driver) {
         try {
-            Shutterbug.shootPage(GUIDriver.getInstance(), Capture.FULL_SCROLL)
+            Shutterbug.shootPage(driver.get(), Capture.FULL_SCROLL)
                     .save(SCREENSHOTS_PATH);
             LogUtils.info("Capturing Screenshot Succeeded");
         } catch (Exception e) {
@@ -97,12 +100,13 @@ public class ScreenshotUtils {
     }
 
     //TODO: take full screenshot with highlighting on element
-    public static void takeFullScreenshotWithHighlighting(String screenshotName, By locator) {
+    public static void takeFullScreenshotWithHighlighting(GUIDriver driver, String screenshotName, By locator) {
         try {
             //Highlight element
+            elementActions = new ElementActions(driver.get());
             elementActions.highLightElement(locator);
             // Capture screenshot using TakesScreenshot
-            File screenshotSrc = ((TakesScreenshot) GUIDriver.getInstance()).getScreenshotAs(OutputType.FILE);
+            File screenshotSrc = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.FILE);
 
             // Save screenshot to a file if needed
             File screenshotFile = new File(SCREENSHOTS_PATH + screenshotName + "-" + getTimestamp() + ".png");
