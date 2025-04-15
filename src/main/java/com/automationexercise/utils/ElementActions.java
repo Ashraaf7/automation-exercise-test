@@ -132,6 +132,7 @@ public class ElementActions {
 
     //Convert Locator to Web Element
     public WebElement findElement(By locator) {
+        waits.waitForElementPresent(locator);
         return driver.findElement(locator);
     }
 

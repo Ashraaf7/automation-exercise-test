@@ -26,7 +26,7 @@ public class Waits {
 
     // Wait for element to be present
     public void waitForElementPresent(By locator) {
-        wait.until(driver -> driver.findElement(locator)); // No changes needed here
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator)); // No changes needed here
     }
 
     // Wait for element to be visible (re-find the element each time to avoid staleness)
