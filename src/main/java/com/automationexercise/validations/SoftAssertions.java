@@ -36,6 +36,7 @@ public class SoftAssertions extends BaseAssertions {
 
     private static void resetSoftAssert() {
         softAssert = new SoftAssert();
+        used = false; // Reset the flag
     }
 
     @Override
