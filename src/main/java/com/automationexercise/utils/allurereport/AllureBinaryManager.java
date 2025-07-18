@@ -84,7 +84,7 @@ public class AllureBinaryManager {
         try (ZipInputStream zipInputStream = new ZipInputStream(Files.newInputStream(zipPath))) {
             ZipEntry entry;
             while ((entry = zipInputStream.getNextEntry()) != null) {
-                Path filePath = Paths.get(AllureConstants.EXTRACTION_DIR.toString(), entry.getName());
+                Path filePath = Paths.get(AllureConstants.EXTRACTION_DIR.toString(),File.separator, entry.getName());
                 if (entry.isDirectory()) {
                     Files.createDirectories(filePath);
                 } else {
@@ -92,6 +92,9 @@ public class AllureBinaryManager {
                     Files.copy(zipInputStream, filePath);
                 }
             }
+        }
+        catch (Exception e) {
+            LogUtils.error("Error extracting Allure zip file", e.getMessage());
         }
     }
 
