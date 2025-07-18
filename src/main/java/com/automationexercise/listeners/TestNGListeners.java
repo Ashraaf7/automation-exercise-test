@@ -1,6 +1,4 @@
 package com.automationexercise.listeners;
-
-import com.automationexercise.drivers.GUIDriver;
 import com.automationexercise.drivers.WebDriverProvider;
 import com.automationexercise.utils.*;
 import com.automationexercise.utils.allurereport.AllureAttachmentManager;
@@ -10,20 +8,13 @@ import com.automationexercise.utils.allurereport.AllureReportGenerator;
 import com.automationexercise.validations.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.testng.*;
-
 import java.io.File;
-import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import static com.automationexercise.utils.PropertiesUtils.loadProperties;
 
 
 public class TestNGListeners implements IExecutionListener, IInvokedMethodListener, ITestListener, ISuiteListener {
     File screenshots = new File("test-outputs/screenshots");
     File recordings = new File("test-outputs/recordings");
-    File allure_results = new File("test-outputs/allure-results");
-    File reports = new File("test-outputs/reports");
     File logs = new File("test-outputs/Logs");
 
     @Override
