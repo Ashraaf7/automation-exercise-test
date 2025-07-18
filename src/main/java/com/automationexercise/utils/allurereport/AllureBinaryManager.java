@@ -1,8 +1,10 @@
 package com.automationexercise.utils.allurereport;
 
+import com.automationexercise.utils.FilesUtils;
 import com.automationexercise.utils.LogUtils;
 import com.automationexercise.utils.OSUtils;
 import com.automationexercise.utils.TerminalUtils;
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 
 import java.io.BufferedInputStream;
@@ -56,6 +58,8 @@ public class AllureBinaryManager {
             extractZip(zipPath);
 
             LogUtils.info("Allure binaries downloaded and extracted.");
+            // Clean up the zip file after extraction
+            Files.deleteIfExists(Files.list(AllureConstants.EXTRACTION_DIR).filter(p -> p.toString().endsWith(".zip")).findFirst().orElseThrow());
         } catch (Exception e) {
             LogUtils.error("Error downloading or extracting binaries", e.getMessage());
         }
@@ -74,19 +78,20 @@ public class AllureBinaryManager {
             String url = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/" + version + "/allure-commandline-" + version + ".zip";
             Path zipFile = Paths.get(AllureConstants.EXTRACTION_DIR.toString(), "allure-" + version + ".zip");
             if (!Files.exists(zipFile)) {
+                Files.createDirectories(AllureConstants.EXTRACTION_DIR);
                 try (BufferedInputStream in = new BufferedInputStream(new URI(url).toURL().openStream());
                      OutputStream out = Files.newOutputStream(zipFile)) {
                     in.transferTo(out);
-                } catch (URISyntaxException e) {
-                    LogUtils.error("Invalid URL for Allure download: " + url, e.getMessage());
+                } catch (Exception e) {
+                    LogUtils.error("Invalid URL for Allure download: ", e.getMessage());
                 }
             }
             return zipFile;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LogUtils.error("Error downloading Allure zip file", e.getMessage());
             return Paths.get("");
         }
+
 
     }
 

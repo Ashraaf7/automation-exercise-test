@@ -10,6 +10,8 @@ import com.automationexercise.validations.SoftAssertions;
 import org.testng.*;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static com.automationexercise.utils.PropertiesUtils.loadProperties;
 
