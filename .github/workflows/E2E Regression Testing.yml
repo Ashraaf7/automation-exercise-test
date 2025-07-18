@@ -35,37 +35,9 @@ jobs:
         with:
           maven-version: 3.9.6
 
-      - name: Set permissions for github.workspace
-        run: sudo chmod -R 777 $GITHUB_WORKSPACE
-
-      - name: Download Allure History from gh-pages-linux
-        continue-on-error: true
-        run: |
-          git config --global user.email "ahmedashraaf09@gmail.com"
-          git config --global user.name "Ashraaf7"
-          git clone --depth=1 --branch history-linux https://github.com/${{ github.repository }}.git history-linux
-          mkdir -p ./test-outputs/allure-results/
-          cp -r history-linux/history ./test-outputs/allure-results/ || echo "No history yet"
-
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Chrome" -DrecordTests="false" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
-
-      - name: Update Allure History on history-linux
-        continue-on-error: true
-        run: |
-          git config --global user.email "ahmedashraaf09@gmail.com"
-          git config --global user.name "Ashraaf7"
-
-          cp -r test-outputs/full-report/history history-linux/ || echo "No new history to copy"
-
-
-
-          cd history-linux
-          git add .
-          git commit -m "Update Linux history from CI run [skip ci]" || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git push origin history-linux
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
@@ -92,33 +64,10 @@ jobs:
         with:
           maven-version: 3.9.6
 
-      - name: Download Allure History from history-windows
-        continue-on-error: true
-        run: |
-          git config --global user.email "ahmedashraaf09@gmail.com"
-          git config --global user.name "Ashraaf7"
-          git clone --depth=1 --branch history-windows https://github.com/${{ github.repository }}.git history-windows
-          mkdir -p ./test-outputs/allure-results/
-          cp -r history-windows/history ./test-outputs/allure-results/ || echo "No history yet"
-
       - name: Run Tests
         continue-on-error: true
         run: mvn -DbrowserType="Edge" -DrecordTests="false" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
 
-      - name: Update Allure History on history-windows
-        continue-on-error: true
-        run: |
-          git config --global user.email "ahmedashraaf09@gmail.com"
-          git config --global user.name "Ashraaf7"
-
-          Copy-Item -Recurse -Force "test-outputs/full-report/history" "history-windows/" -ErrorAction SilentlyContinue
-
-
-          cd history-windows
-          git add .
-          git commit -m "Update Windows history from CI run [skip ci]" || echo "No changes to commit"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git push origin history-windows
 
       - name: Upload Allure Report as Artifact
         uses: actions/upload-artifact@v4
