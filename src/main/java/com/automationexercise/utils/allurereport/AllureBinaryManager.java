@@ -58,8 +58,13 @@ public class AllureBinaryManager {
             extractZip(zipPath);
 
             LogUtils.info("Allure binaries downloaded and extracted.");
+            // Give execute permissions to the binary if not on Windows
+            if (!OSUtils.getCurrentOS().equals(OSUtils.OS.WINDOWS)) {
+                TerminalUtils.executeTerminalCommand("chmod", "u+x", getExecutable().toString());
+            }
             // Clean up the zip file after extraction
             Files.deleteIfExists(Files.list(AllureConstants.EXTRACTION_DIR).filter(p -> p.toString().endsWith(".zip")).findFirst().orElseThrow());
+
         } catch (Exception e) {
             LogUtils.error("Error downloading or extracting binaries", e.getMessage());
         }
