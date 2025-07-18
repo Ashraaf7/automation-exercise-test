@@ -2,12 +2,12 @@ package com.automationexercise.utils;
 
 import com.assertthat.selenium_shutterbug.core.Capture;
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
-import com.automationexercise.drivers.GUIDriver;
 import com.automationexercise.utils.allurereport.AllureAttachmentManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 
@@ -23,10 +23,10 @@ public class ScreenshotUtils {
 
 
     //TODO: Take general Screenshot
-    public static void takeScreenShot(GUIDriver driver, String screenshotName) {
+    public static void takeScreenShot(WebDriver driver, String screenshotName) {
         try {
             // Capture screenshot using TakesScreenshot
-            File screenshotSrc = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.FILE);
+            File screenshotSrc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
             // Save screenshot to a file if needed
 
@@ -43,10 +43,10 @@ public class ScreenshotUtils {
     }
 
     //TODO: Take general Screenshot
-    public static void takeHighlightedScreenShot(GUIDriver driver, String screenshotName, By element) {
+    public static void takeHighlightedScreenShot(WebDriver driver, String screenshotName, By element) {
         try {
             //Highlight element
-            elementActions = new ElementActions(driver.get());
+            elementActions = new ElementActions(driver);
             elementActions.highLightElement(element);
             // Capture screenshot using TakesScreenshot
             File screenshotSrc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -66,10 +66,10 @@ public class ScreenshotUtils {
     }
 
     //TODO: Take Screenshot for specific element
-    public static void takeScreenShotForElement(GUIDriver driver, By locator, String screenshotName) {
+    public static void takeScreenShotForElement(WebDriver driver, By locator, String screenshotName) {
         try {
             // Capture screenshot using TakesScreenshot
-            elementActions = new ElementActions(driver.get());
+            elementActions = new ElementActions(driver);
             File screenshotSrc = elementActions.findElement(locator)
                     .getScreenshotAs(OutputType.FILE);
             // Save screenshot to a file if needed
@@ -87,9 +87,9 @@ public class ScreenshotUtils {
     }
 
     //TODO: take full screenshot without highlighting on element
-    public static void takeFullScreenshot(GUIDriver driver) {
+    public static void takeFullScreenshot(WebDriver driver) {
         try {
-            Shutterbug.shootPage(driver.get(), Capture.FULL_SCROLL)
+            Shutterbug.shootPage(driver, Capture.FULL_SCROLL)
                     .save(SCREENSHOTS_PATH);
             LogUtils.info("Capturing Screenshot Succeeded");
         } catch (Exception e) {
@@ -100,13 +100,13 @@ public class ScreenshotUtils {
     }
 
     //TODO: take full screenshot with highlighting on element
-    public static void takeFullScreenshotWithHighlighting(GUIDriver driver, String screenshotName, By locator) {
+    public static void takeFullScreenshotWithHighlighting(WebDriver driver, String screenshotName, By locator) {
         try {
             //Highlight element
-            elementActions = new ElementActions(driver.get());
+            elementActions = new ElementActions(driver);
             elementActions.highLightElement(locator);
             // Capture screenshot using TakesScreenshot
-            File screenshotSrc = ((TakesScreenshot) driver.get()).getScreenshotAs(OutputType.FILE);
+            File screenshotSrc = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
             // Save screenshot to a file if needed
             File screenshotFile = new File(SCREENSHOTS_PATH + screenshotName + "-" + getTimestamp() + ".png");

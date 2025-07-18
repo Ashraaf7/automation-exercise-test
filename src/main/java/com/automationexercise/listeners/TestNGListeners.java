@@ -1,15 +1,18 @@
 package com.automationexercise.listeners;
 
 import com.automationexercise.drivers.GUIDriver;
+import com.automationexercise.drivers.WebDriverProvider;
 import com.automationexercise.utils.*;
 import com.automationexercise.utils.allurereport.AllureAttachmentManager;
 import com.automationexercise.utils.allurereport.AllureConstants;
 import com.automationexercise.utils.allurereport.AllureEnvironmentManager;
 import com.automationexercise.utils.allurereport.AllureReportGenerator;
 import com.automationexercise.validations.SoftAssertions;
+import org.openqa.selenium.WebDriver;
 import org.testng.*;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -65,10 +68,12 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult result) {
+        WebDriver driver = null;
         if (method.isTestMethod()) {
             ScreenRecorderUtils.stopRecording(result.getName());
             SoftAssertions.AssertIfUsed();
-            GUIDriver driver = GUIDriver.extractDriver(result);
+            if (result.getInstance() instanceof WebDriverProvider provider)
+                 driver = provider.getWebDriver();
             switch (result.getStatus()) {
                 case ITestResult.FAILURE -> ScreenshotUtils.takeScreenShot(driver, "failed-" + result.getName());
 
