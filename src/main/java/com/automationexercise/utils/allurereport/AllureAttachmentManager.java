@@ -31,7 +31,7 @@ public class AllureAttachmentManager {
     public static void attachLogs() {
         try {
             LogManager.shutdown();
-            FilesUtils.getLogFileAfterTest(LogUtils.LOGS_PATH + File.separator + "logs.log");
+            //FilesUtils.getLogFileAfterTest(LogUtils.LOGS_PATH + File.separator + "logs.log");
             File logFile = new File(LogUtils.LOGS_PATH + File.separator + "logs.log");
             ((LoggerContext) LogManager.getContext(false)).reconfigure();
             if (logFile.exists()) {
