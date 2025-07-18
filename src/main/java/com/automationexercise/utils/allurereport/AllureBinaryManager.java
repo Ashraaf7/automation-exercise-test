@@ -40,11 +40,16 @@ public class AllureBinaryManager {
     public static void downloadAndExtract() {
         try {
             String version = LazyHolder.VERSION;
-            Path extractionDir = Paths.get(AllureConstants.EXTRACTION_DIR.toString(), "allure-" + version);
-            if (Files.exists(extractionDir)) {
-                LogUtils.info("Allure binaries already exist.");
-                return;
+            try {
+                Path extractionDir = Paths.get(AllureConstants.EXTRACTION_DIR.toString(), "allure-" + version);
+                if (Files.exists(extractionDir)) {
+                    LogUtils.info("Allure binaries already exist.");
+                    return;
+                }
+            } catch (Exception e) {
+                LogUtils.error("Error checking extraction directory", e.getMessage());
             }
+
             // Give execute permissions to the binary if not on Windows
             if (!OSUtils.getCurrentOS().equals(OSUtils.OS.WINDOWS)) {
                 TerminalUtils.executeTerminalCommand("chmod", "u+x", getExecutable().toString());
