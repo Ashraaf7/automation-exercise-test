@@ -154,7 +154,6 @@ public class FilesUtils {
             } catch (Exception e) {
                 LogUtils.error("An unexpected error occurred: " + e.getMessage());
             }
-
             isFirstTest = false;
         }
     }
