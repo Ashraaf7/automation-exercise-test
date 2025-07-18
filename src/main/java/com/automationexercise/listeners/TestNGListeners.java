@@ -2,12 +2,15 @@ package com.automationexercise.listeners;
 
 import com.automationexercise.drivers.GUIDriver;
 import com.automationexercise.utils.*;
+import com.automationexercise.utils.allurereport.AllureAttachmentManager;
+import com.automationexercise.utils.allurereport.AllureConstants;
+import com.automationexercise.utils.allurereport.AllureEnvironmentManager;
+import com.automationexercise.utils.allurereport.AllureReportGenerator;
 import com.automationexercise.validations.SoftAssertions;
 import org.testng.*;
 
 import java.io.File;
 
-import static com.automationexercise.utils.AllureUtils.copyHistory;
 import static com.automationexercise.utils.PropertiesUtils.loadProperties;
 
 
@@ -23,6 +26,9 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         LogUtils.info("Test Execution started");
 
 
+        cleanTestOutputDirectories();
+        LogUtils.info("Directories cleaned");
+
         createTestOutputDirectories();
         LogUtils.info("Directories created");
 
@@ -30,21 +36,20 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
         LogUtils.info("Properties loaded");
 
 
-        AllureUtils.setAllureEnvironment();
+        AllureEnvironmentManager.setEnvironmentVariables();
         LogUtils.info("Allure environment set");
     }
 
 
     @Override
     public void onExecutionFinish() {
-        LogUtils.info("Test Execution Finished");
-        copyHistory();
+        AllureReportGenerator.generateReports(false);
+        AllureReportGenerator.copyHistory();
         LogUtils.info("History copied");
-        AllureUtils.generateAllureReport();
-        AllureUtils.generateFullAllureReport();
-        String newFileName = AllureUtils.renameAllureReport();
-        AllureUtils.openAllureReport(newFileName);
-        cleanTestOutputDirectories();
+        AllureReportGenerator.generateReports(true);
+        String newFileName = AllureReportGenerator.renameReport();
+        AllureReportGenerator.openReport(newFileName);
+        LogUtils.info("Test Execution Finished");
     }
 
     @Override
@@ -70,8 +75,8 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
                 case ITestResult.SKIP -> ScreenshotUtils.takeScreenShot(driver, "skipped-" + result.getName());
 
             }
-            AllureUtils.attachLogsToAllure();
-            AllureUtils.attachRecordsToAllure();
+            AllureAttachmentManager.attachLogs();
+            AllureAttachmentManager.attachRecords();
         } else if (method.isConfigurationMethod()) {
             // For Configuration Methods: Log Only
             switch (result.getStatus()) {
@@ -104,22 +109,15 @@ public class TestNGListeners implements IExecutionListener, IInvokedMethodListen
     }
 
     private void cleanTestOutputDirectories() {
-        FilesUtils.deleteSpecificFiles(AllureUtils.ALLURE_RESULTS_FOLDER_PATH, "history");
-        String cleanHistory = ConfigUtils.getConfigValue("cleanHistory");
-        if ("true".equalsIgnoreCase(cleanHistory)) {
-            FilesUtils.cleanDirectory(new File(AllureUtils.ALLURE_RESULTS_FOLDER_PATH));
-        }
+        FilesUtils.cleanDirectory(AllureConstants.RESULTS_FOLDER.toFile());
         FilesUtils.cleanDirectory(screenshots);
-        //FilesUtils.cleanDirectory(reports);
         FilesUtils.cleanDirectory(recordings);
-        FilesUtils.forceDelete(logs);
+        FilesUtils.cleanDirectory(logs);
     }
 
     private void createTestOutputDirectories() {
-        FilesUtils.createDirs(LogUtils.LOGS_PATH);
         FilesUtils.createDirs(ScreenshotUtils.SCREENSHOTS_PATH);
         FilesUtils.createDirs(ScreenRecorderUtils.RECORDINGS_PATH);
-        FilesUtils.createDirs(AllureUtils.ALLURE_REPORT_PATH);
     }
 
 }

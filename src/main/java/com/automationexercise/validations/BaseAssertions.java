@@ -1,9 +1,9 @@
 package com.automationexercise.validations;
 
-import com.automationexercise.utils.AllureUtils;
 import com.automationexercise.utils.ElementActions;
 import com.automationexercise.utils.LogUtils;
 import com.automationexercise.utils.Waits;
+import com.automationexercise.utils.allurereport.AllureStepParameterHelper;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -66,7 +66,7 @@ public abstract class BaseAssertions {
     public void validateElementVisible(By by) {
         String elementName = elementActions.findElement(by).getAccessibleName();
         Allure.step("Verify element " + elementName + " is visible ", () -> {
-            AllureUtils.addStepParameters(new String[][]{
+            AllureStepParameterHelper.addStepParameters(new String[][]{
                     {"element", elementName}
             });
             wait.waitForElementVisible(by);

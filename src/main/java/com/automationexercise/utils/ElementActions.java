@@ -1,5 +1,6 @@
 package com.automationexercise.utils;
 
+import com.automationexercise.utils.allurereport.AllureStepParameterHelper;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -13,7 +14,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
 
-import static com.automationexercise.utils.AllureUtils.addStepParameters;
 
 
 public class ElementActions {
@@ -71,7 +71,7 @@ public class ElementActions {
     //TODO: Clicking on element after checking clickability
     public void click(By locator) {
         String elementName = findElement(locator).getAccessibleName();
-        addStepParameters(new String[][]{
+        AllureStepParameterHelper.addStepParameters(new String[][]{
                 {"element", elementName}
         });
         scrollToElementAtTop(locator);
@@ -91,7 +91,7 @@ public class ElementActions {
         String elementName = findElement(by).getAccessibleName();
         String fileAbsluted = System.getProperty("user.dir") + File.separator + filePath;
         Allure.step("Upload file in " + elementName, () -> {
-            addStepParameters(new String[][]{
+            AllureStepParameterHelper.addStepParameters(new String[][]{
                     {"element", elementName},
                     {"File Path", filePath}
             });
@@ -107,7 +107,7 @@ public class ElementActions {
     public void type(By locator, String data) {
         String elementName = findElement(locator).getAccessibleName();
         Allure.step("Type " + data + " in " + elementName, () -> {
-            AllureUtils.addStepParameters(new String[][]{
+            AllureStepParameterHelper.addStepParameters(new String[][]{
                     {"element", elementName}
                     , {"data", data}
             });

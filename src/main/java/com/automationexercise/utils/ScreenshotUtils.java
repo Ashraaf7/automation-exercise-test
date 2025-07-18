@@ -3,6 +3,7 @@ package com.automationexercise.utils;
 import com.assertthat.selenium_shutterbug.core.Capture;
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
 import com.automationexercise.drivers.GUIDriver;
+import com.automationexercise.utils.allurereport.AllureAttachmentManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -10,7 +11,6 @@ import org.openqa.selenium.TakesScreenshot;
 
 import java.io.File;
 
-import static com.automationexercise.utils.AllureUtils.attachScreenshotToAllure;
 import static com.automationexercise.utils.TimeUtils.getTimestamp;
 
 public class ScreenshotUtils {
@@ -35,7 +35,7 @@ public class ScreenshotUtils {
             LogUtils.info("Capturing Screenshot Succeeded");
             // Attach the screenshot to Allure
             Thread.sleep(4000);
-            attachScreenshotToAllure(screenshotName, screenshotFile.getPath());
+            AllureAttachmentManager.attachScreenshot(screenshotName, screenshotFile.getPath());
 
         } catch (Exception e) {
             LogUtils.error("Failed to Capture Screenshot ", e.getMessage());
@@ -57,7 +57,7 @@ public class ScreenshotUtils {
 
 
             // Attach the screenshot to Allure
-            attachScreenshotToAllure(screenshotName, screenshotFile.getPath());
+            AllureAttachmentManager.attachScreenshot(screenshotName, screenshotFile.getPath());
             LogUtils.info("Capturing Screenshot Succeeded");
         } catch (Exception e) {
             LogUtils.error("Failed to Capture Screenshot " + e.getMessage());
@@ -77,7 +77,7 @@ public class ScreenshotUtils {
             FileUtils.copyFile(screenshotSrc, screenshotFile);
 
             // Attach the screenshot to Allure
-            attachScreenshotToAllure(screenshotName, screenshotFile.getPath());
+            AllureAttachmentManager.attachScreenshot(screenshotName, screenshotFile.getPath());
             LogUtils.info("Capturing Screenshot Succeeded");
 
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class ScreenshotUtils {
             FileUtils.copyFile(screenshotSrc, screenshotFile);
 
             // Attach the screenshot to Allure
-            attachScreenshotToAllure(screenshotName, screenshotFile.getPath());
+            AllureAttachmentManager.attachScreenshot(screenshotName, screenshotFile.getPath());
             LogUtils.info("Capturing Screenshot Succeeded");
 
         } catch (Exception e) {

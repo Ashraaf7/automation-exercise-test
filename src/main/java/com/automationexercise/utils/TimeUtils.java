@@ -3,7 +3,7 @@ package com.automationexercise.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TimeUtils {
+public class    TimeUtils {
     private TimeUtils() {
         super();
     }
