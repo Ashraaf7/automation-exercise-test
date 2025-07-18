@@ -40,22 +40,27 @@ public class AllureBinaryManager {
     public static void downloadAndExtract() {
         try {
             String version = LazyHolder.VERSION;
-            Path extractionDir = Paths.get(AllureConstants.EXTRACTION_DIR.toString(), "allure-" + version);
-            if (Files.exists(extractionDir)) {
-                LogUtils.info("Allure binaries already exist.");
-                return;
+            try {
+                Path extractionDir = Paths.get(AllureConstants.EXTRACTION_DIR.toString(), "allure-" + version);
+                if (Files.exists(extractionDir)) {
+                    LogUtils.info("Allure binaries already exist.");
+                    return;
+                }
+
+                // Give execute permissions to the binary if not on Windows
+                if (!OSUtils.getCurrentOS().equals(OSUtils.OS.WINDOWS)) {
+                    TerminalUtils.executeTerminalCommand("chmod", "u+x", AllureConstants.USER_DIR.toString());
+                }
+            }
+            catch (Exception e) {
+                LogUtils.error("Error ", e.getMessage());
             }
 
-        // Give execute permissions to the binary if not on Windows
-        if (!OSUtils.getCurrentOS().equals(OSUtils.OS.WINDOWS)) {
-            TerminalUtils.executeTerminalCommand("chmod", "u+x", AllureConstants.USER_DIR.toString());
-        }
         Path zipPath = downloadZip(version);
         extractZip(zipPath);
 
         LogUtils.info("Allure binaries downloaded and extracted.");
-    } catch(
-    Exception e)
+    } catch(Exception e)
 
     {
         LogUtils.error("Error downloading or extracting binaries", e.getMessage());
