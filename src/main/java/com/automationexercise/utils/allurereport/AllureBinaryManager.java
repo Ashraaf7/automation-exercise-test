@@ -51,15 +51,16 @@ public class AllureBinaryManager {
                 if (!OSUtils.getCurrentOS().equals(OSUtils.OS.WINDOWS)) {
                     TerminalUtils.executeTerminalCommand("chmod", "u+x", AllureConstants.USER_DIR.toString());
                 }
-            }
-            catch (Exception e) {
-                LogUtils.error("Error ", e.getMessage());
-            }
+
 
         Path zipPath = downloadZip(version);
         extractZip(zipPath);
 
         LogUtils.info("Allure binaries downloaded and extracted.");
+            }
+            catch (Exception e) {
+                LogUtils.error("Error ", e.getMessage());
+            }
     } catch(Exception e)
 
     {
