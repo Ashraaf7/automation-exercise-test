@@ -40,7 +40,7 @@ jobs:
         run: mvn -DbrowserType="Chrome" -DrecordTests="false" -DexecutionType="LocalHeadless" -DOpenAllureReportAfterExecution="false" -Dtest="${{ env.TESTING_SCOPE }}" clean test
 
       - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Chrome_Linux_Allure
           path: "test-outputs/reports/*.html"
@@ -70,7 +70,7 @@ jobs:
 
 
       - name: Upload Allure Report as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Edge_Windows_Allure
           path: "test-outputs/reports/*.html"
